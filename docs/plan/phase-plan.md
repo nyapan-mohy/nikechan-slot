@@ -1,142 +1,147 @@
-# Smart Slot Emulator Phase Plan
+# スマートスロットエミュレーター フェーズ計画
 
-## Purpose
+## 目的
 
-This project aims to create a specification-driven smart slot emulator using HTML and Canvas, while organizing the documents needed to reason about Japanese smart slot type-test and inspection requirements.
+このプロジェクトでは、HTML + Canvas を使った仕様準拠型のスマートスロットエミュレーターを開発しつつ、日本のスマートスロットにおける検定・型式試験を意識した設計資料を整理します。
 
-Important scope note: an actual Japanese slot machine type test applies to a complete machine type, including hardware, control boards, firmware, cabinet, power behavior, credit/payment behavior, display, sound, and ROM contents. A browser emulator cannot itself be submitted as a real machine type. This project therefore separates:
+重要な前提として、実際の日本の回胴式遊技機に対する型式試験は、ブラウザアプリ単体ではなく、筐体、主制御基板、副制御基板、電源、クレジット管理、表示、音響、ROM、プログラム、構造などを含む「遊技機の型式」に対して行われます。そのため、本プロジェクトでは以下を明確に分離します。
 
-- Regulatory and type-test oriented design documents.
-- Emulator implementation documents and executable behavior.
-- Gaps that must be filled when moving from emulator to physical machine.
+- 検定・型式試験を意識した設計資料
+- エミュレーターとして実装・検証できる仕様
+- 実機化する際に別途必要になるハードウェア・製造・申請関連の不足項目
 
-## Final Deliverables
+## 最終成果物
 
-- Regulatory research notes and compliance matrix.
-- Complete game specification documents.
-- Mathematical design and simulation reports.
-- HTML + Canvas smart slot emulator.
-- Batch simulator for long-run verification.
-- Test logs and reproducible reports.
-- Limitations document covering emulator-versus-real-machine differences.
+- 法令・規則・解釈基準の調査メモ
+- 検定観点の適合チェックリスト
+- 遊技仕様書一式
+- 数理設計資料
+- シミュレーション結果レポート
+- HTML + Canvas スマートスロットエミュレーター
+- 長期試行用のバッチシミュレーター
+- テストログと再現可能な検証レポート
+- エミュレーターと実機検定の差分をまとめた制約事項ドキュメント
 
-## Phase 0: Regulatory Scope Definition
+## フェーズ 0: 規制・検定スコープの確定
 
-Goal: clarify the legal and technical scope before designing game behavior.
+目的: 遊技仕様を設計する前に、法令・規則・検定の対象範囲を整理します。
 
-Deliverables:
+成果物:
 
-- Applicable law, regulation, notice, and interpretation reference list.
-- Type-test and public safety commission inspection flow summary.
-- Smart slot specific scope assumptions.
-- Emulator scope and non-emulator hardware scope split.
-- Risk register for uncertain or institution-dependent requirements.
+- 適用される法令、規則、通知、解釈基準の一覧
+- 型式試験と公安委員会検定の流れ
+- スマートスロットとして扱う範囲の前提整理
+- エミュレーターで再現する範囲と、実機でのみ必要な範囲の切り分け
+- 不確定要素や確認が必要な項目のリスク一覧
 
-Key decisions:
+主な決定事項:
 
-- Which machine category and rule set the design targets.
-- Which regulatory checks can be simulated in software.
-- Which items require real hardware documentation later.
+- 対象とする遊技機カテゴリ
+- 対象とする規則・基準
+- ソフトウェア上で検証できる規制項目
+- 実機開発時に別途必要になる資料・証跡
 
-Exit criteria:
+完了条件:
 
-- The team can explain what the emulator proves and what it does not prove.
-- All future specification files have a known regulatory reference point.
+- エミュレーターで証明できること、証明できないことが明確になっている
+- 以後の仕様書が、どの規制・基準を前提にしているか説明できる
 
-## Phase 1: Game Specification Draft
+## フェーズ 1: 遊技仕様の作成
 
-Goal: define the machine behavior in a way that can be implemented and tested.
+目的: 実装・検証可能な粒度で、スマートスロットの遊技仕様を定義します。
 
-Deliverables:
+成果物:
 
-- Machine concept specification.
-- Game state specification.
-- Reel strip table.
-- Symbol definition table.
-- Role and payout table.
-- Setting-based lottery tables.
-- Replay, small role, bonus, AT, and special state behavior.
-- Credit, bet, payout, and smart slot credit-management assumptions.
-- Stop-control specification.
-- Winning judgment specification.
-- Error, reset, and power recovery assumptions.
+- 機種コンセプト仕様書
+- 遊技状態仕様書
+- リール配列表
+- 図柄定義表
+- 役構成表
+- 払出表
+- 設定別抽選テーブル
+- リプレイ、小役、ボーナス、AT、特殊状態の仕様
+- クレジット、ベット、払出、スマートスロット特有のクレジット管理前提
+- 停止制御仕様
+- 入賞判定仕様
+- エラー、リセット、電断復帰の前提仕様
 
-Key decisions:
+主な決定事項:
 
-- Number of reels, symbols, lines, and stop buttons.
-- Base game, bonus, AT, and special state model.
-- Setting count and setting-specific probability design.
-- Internal flag lifetime and state transition rules.
+- リール数、図柄数、有効ライン、停止ボタン数
+- 通常時、ボーナス、AT、特殊状態の構成
+- 設定数と設定別の確率設計
+- 内部フラグの寿命と状態遷移ルール
 
-Exit criteria:
+完了条件:
 
-- A developer can implement the core engine without asking design questions.
-- A simulator can run from structured data files rather than hard-coded guesses.
+- 開発者が追加の設計確認なしにコアエンジンを実装できる
+- シミュレーターがハードコードではなく、構造化データから動作できる
 
-## Phase 2: Type-Test Document Package Design
+## フェーズ 2: 検定資料パッケージの設計
 
-Goal: create a document structure close to what a real machine development project would need.
+目的: 実機開発で必要になる資料体系に近い形で、ドキュメント構成を作ります。
 
-Deliverables:
+成果物:
 
-- Type overview document.
-- Machine specification table.
-- Game operation manual.
-- Structural explanation document.
-- Electrical and control-system explanation document.
-- Main-control and sub-control specification split.
-- Program behavior specification.
-- Random-number and lottery explanation document.
-- Stop-control explanation document.
-- Winning and payout explanation document.
-- Compliance checklist.
-- Pre-submission review checklist.
+- 型式概要書
+- 諸元表
+- 遊技方法説明書
+- 構造説明書
+- 電気的構成説明書
+- 主制御仕様書
+- 副制御仕様書
+- プログラム仕様書
+- 乱数・抽選方式説明書
+- 停止制御説明書
+- 入賞判定・払出制御説明書
+- 法令適合チェックリスト
+- 提出前レビューリスト
 
-Key decisions:
+主な決定事項:
 
-- Which documents are emulator-only.
-- Which documents are placeholders for physical machine development.
-- Which values must be generated from implementation and simulation.
+- エミュレーター用資料として完結するもの
+- 実機化時のプレースホルダーとして残すもの
+- 実装やシミュレーションから自動生成すべき数値・表
 
-Exit criteria:
+完了条件:
 
-- Documentation folders and templates exist.
-- Each required document has an owner, source of truth, and completion condition.
+- 必要なドキュメントの格納場所とテンプレートがある
+- 各資料について、情報源、責任範囲、完了条件が定義されている
 
-## Phase 3: Mathematics and Simulation
+## フェーズ 3: 数理設計とシミュレーション
 
-Goal: verify that the designed behavior produces expected statistical results.
+目的: 設計した遊技仕様が、想定した出玉性能・確率分布になることを検証します。
 
-Deliverables:
+成果物:
 
-- Deterministic random-number generator interface.
-- Batch simulation runner.
-- Auto-play strategy for regulatory-style testing.
-- Role appearance report.
-- Payout rate report by setting.
-- Short, medium, and long-run performance reports.
-- AT entry and continuation report.
-- Advantageous section and net-difference management report, if applicable.
-- Boundary and abnormal-state test report.
+- 決定論的に再現できる乱数インターフェース
+- バッチシミュレーション実行機能
+- 検証用オートプレイ仕様
+- 役別出現率レポート
+- 設定別出玉率レポート
+- 短期・中期・長期の試行結果レポート
+- AT 突入率・継続率レポート
+- 有利区間や差枚管理を採用する場合の検証レポート
+- 境界値・異常系テストレポート
 
-Key decisions:
+主な決定事項:
 
-- Simulation game count targets.
-- Report format.
-- Seed handling for reproducible results.
-- Acceptance thresholds between design values and simulated values.
+- シミュレーションの試行ゲーム数
+- レポート形式
+- 乱数シードの扱い
+- 設計値と実測値の許容誤差
 
-Exit criteria:
+完了条件:
 
-- Long-run simulation is reproducible from the command line.
-- Reports identify deviations from the specification.
-- The implementation can be tested before Canvas UI work begins.
+- コマンドラインから長期シミュレーションを再現できる
+- 仕様値と実装値の差分をレポートで確認できる
+- Canvas UI に入る前に、コアロジック単体で検証できる
 
-## Phase 4: Emulator Architecture
+## フェーズ 4: エミュレーター設計
 
-Goal: build a browser emulator that stays aligned with the specification.
+目的: 仕様書とズレないブラウザ上のスマートスロットエミュレーターを作ります。
 
-Recommended structure:
+推奨ディレクトリ構成:
 
 ```text
 src/
@@ -169,112 +174,113 @@ docs/
   test-reports/
 ```
 
-Deliverables:
+成果物:
 
-- Core game engine independent from UI.
-- Canvas renderer for reels, symbols, lamps, panels, and counters.
-- Input layer for bet, lever, and stop buttons.
-- Sound and effect hooks.
-- Debug panel for flags, state, seed, and counters.
-- Auto-play mode.
-- Log export.
+- UI に依存しないコアゲームエンジン
+- リール、図柄、ランプ、パネル、カウンターを描画する Canvas レンダラー
+- ベット、レバー、停止ボタンの入力レイヤー
+- サウンド・演出フック
+- フラグ、状態、シード、カウンターを確認できるデバッグパネル
+- オートプレイモード
+- ログ出力機能
 
-Key decisions:
+主な決定事項:
 
-- TypeScript or plain JavaScript.
-- Build tool and test framework.
-- Canvas rendering resolution and scaling policy.
-- Data-file format for game tables.
+- TypeScript で実装するか、プレーン JavaScript で実装するか
+- ビルドツールとテストフレームワーク
+- Canvas の解像度、スケーリング、レスポンシブ方針
+- 遊技テーブル用データファイルの形式
 
-Exit criteria:
+完了条件:
 
-- Manual play works in the browser.
-- Auto-play and UI use the same core engine.
-- UI state can be verified against core logs.
+- ブラウザ上で手動遊技できる
+- オートプレイと UI が同じコアエンジンを使っている
+- UI 上の表示状態をコアログと照合できる
 
-## Phase 5: Implementation Milestones
+## フェーズ 5: 実装マイルストーン
 
-Milestone 1: repository foundation
+マイルストーン 1: リポジトリ基盤
 
-- Create document folders.
-- Create core source folders.
-- Add build, lint, and test tooling.
-- Add initial README and contribution notes.
+- ドキュメント用ディレクトリを作る
+- コア実装用ディレクトリを作る
+- ビルド、lint、テスト環境を追加する
+- README と開発メモを整備する
 
-Milestone 2: minimum playable engine
+マイルストーン 2: 最小遊技エンジン
 
-- Implement RNG.
-- Implement reels and symbols.
-- Implement role lottery.
-- Implement stop buttons.
-- Implement winning judgment.
-- Implement payout and credit handling.
+- 乱数処理を実装する
+- リールと図柄を実装する
+- 役抽選を実装する
+- 停止ボタン処理を実装する
+- 入賞判定を実装する
+- 払出とクレジット管理を実装する
 
-Milestone 3: verification engine
+マイルストーン 3: 検証エンジン
 
-- Add automated simulation.
-- Add statistical reports.
-- Add deterministic seeds.
-- Add basic compliance checks.
+- 自動シミュレーションを追加する
+- 統計レポートを追加する
+- 乱数シードによる再現機能を追加する
+- 基本的な適合チェックを追加する
 
-Milestone 4: Canvas emulator
+マイルストーン 4: Canvas エミュレーター
 
-- Draw reels and symbols.
-- Add bet, lever, and stop interactions.
-- Add counters and machine status.
-- Add basic animations.
-- Add debug and auto-play controls.
+- リールと図柄を描画する
+- ベット、レバー、停止ボタンの操作を追加する
+- カウンターと遊技状態表示を追加する
+- 基本アニメーションを追加する
+- デバッグ表示とオートプレイ操作を追加する
 
-Milestone 5: advanced game states
+マイルストーン 5: 高度な遊技状態
 
-- Add bonus and AT states.
-- Add advantageous-section style management if selected by the specification.
-- Add state transition reports.
-- Add boundary tests.
+- ボーナス状態を追加する
+- AT 状態を追加する
+- 仕様で採用する場合、有利区間風の管理を追加する
+- 状態遷移レポートを追加する
+- 境界値テストを追加する
 
-Milestone 6: document alignment
+マイルストーン 6: 仕様書と実装の照合
 
-- Generate tables from source data.
-- Compare implementation values against specification values.
-- Produce final simulation reports.
-- Complete limitations and compliance notes.
+- ソースデータから仕様表を生成する
+- 仕様値と実装値を比較する
+- 最終シミュレーションレポートを作成する
+- 制約事項と適合メモを完成させる
 
-## Phase 6: Final Review and Release
+## フェーズ 6: 最終レビューとリリース
 
-Goal: make the repository usable as both a design package and emulator.
+目的: 設計資料としてもエミュレーターとしても参照できる状態に仕上げます。
 
-Deliverables:
+成果物:
 
-- Completed documentation index.
-- Completed specification set.
-- Latest simulation report bundle.
-- Browser app build.
-- Reproducible test command list.
-- Known limitations list.
-- Next-step list for physical machine development.
+- 完成版ドキュメント目次
+- 完成版仕様書一式
+- 最新シミュレーションレポート一式
+- ブラウザアプリのビルド成果物
+- 再現可能なテストコマンド一覧
+- 既知の制約事項一覧
+- 実機化に進む場合の追加タスク一覧
 
-Exit criteria:
+完了条件:
 
-- A new developer can run the emulator from the README.
-- A reviewer can trace game behavior from document to data file to code.
-- Simulation reports can be regenerated.
-- Remaining gaps for actual type-test submission are explicit.
+- 新しい開発者が README だけでエミュレーターを起動できる
+- レビュー担当者が、仕様書、データファイル、コードの対応関係を追える
+- シミュレーションレポートを再生成できる
+- 実際の型式試験に向けて不足している項目が明示されている
 
-## Initial Work Order
+## 初期作業順序
 
-1. Create the regulatory reference and compliance matrix.
-2. Choose the initial technical stack.
-3. Define a minimal three-reel slot specification.
-4. Implement the core engine before UI effects.
-5. Add batch simulation and reports.
-6. Build the Canvas UI.
-7. Expand game states and regulatory-oriented checks.
-8. Finalize documents from implementation data.
+1. 法令・規則の参照リストと適合チェック表を作る
+2. 初期技術スタックを決める
+3. 最小構成の 3 リールスロット仕様を定義する
+4. UI より先にコアエンジンを実装する
+5. バッチシミュレーションとレポートを追加する
+6. Canvas UI を作る
+7. 遊技状態と検定観点のチェックを拡張する
+8. 実装データから仕様書を更新・完成させる
 
-## Open Questions
+## 未決事項
 
-- Should the emulator be TypeScript-based or plain JavaScript?
-- Should the first version target a minimal normal/bonus model, or include AT from the beginning?
-- What level of visual fidelity is required for the first Canvas prototype?
-- Which exact smart slot assumptions should be modeled for credit and external unit behavior?
-- Will future physical-machine documentation be maintained in this repository or split into a separate package?
+- TypeScript で進めるか、プレーン JavaScript で進めるか
+- 初期版から AT を含めるか、通常時とボーナスのみで始めるか
+- 最初の Canvas プロトタイプにどの程度の見た目品質を求めるか
+- スマートスロット特有のクレジット管理・外部ユニット連携をどこまでモデル化するか
+- 将来的な実機向け資料をこのリポジトリで管理するか、別パッケージに分離するか

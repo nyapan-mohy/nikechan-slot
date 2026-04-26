@@ -1,12 +1,12 @@
 # Nikechan Slot
 
-HTML + Canvas based smart slot emulator project.
+HTML + Canvas ベースのスマートスロットエミュレーター開発プロジェクトです。
 
-This repository will contain two major deliverables:
+このリポジトリでは、主に以下の成果物を管理します。
 
-- Documentation package for designing a Japanese smart slot machine in line with regulatory and type-test considerations.
-- A browser-based smart slot emulator that implements the documented game specification.
+- 日本のスマートスロットにおける検定・型式試験を意識した設計資料一式
+- 仕様書に準拠して動作するブラウザ上のスマートスロットエミュレーター
 
-The first planning document is available at:
+最初のフェーズ計画はこちらです。
 
 - [docs/plan/phase-plan.md](docs/plan/phase-plan.md)
