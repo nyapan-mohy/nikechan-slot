@@ -47,6 +47,7 @@
 | panel-control | 操作部パネル | ボタン周辺 | P0 | PNG | 2x表示想定 | 未着手 | Canvas/UI共用 |
 | lcd-bg-normal | 液晶通常背景 | 通常時 | P1 | PNG | 1280x720元データ | 未着手 | 情報量控えめ |
 | lcd-bg-bonus | 液晶ボーナス背景 | ボーナス中 | P1 | PNG | 1280x720元データ | 未着手 | BIG/REG差分検討 |
+| lcd-text-bonus | 液晶BONUS文字 | ボーナス成立告知 | P0 | PNG/SVGまたはCanvas文字 | 1280x720内配置 | 未着手 | 初期版の液晶主表示 |
 | lcd-bg-error | 液晶エラー背景 | エラー時 | P1 | PNG | 1280x720元データ | 未着手 | 文字は実装側でも可 |
 | lcd-flash | 液晶フラッシュ | 告知補助 | P1 | PNG/スプライト | 1280x720元データ | 未着手 | ランプが主役 |
 | icon-volume | 音量アイコン | UI | P0 | SVG/PNG | 64x64 | 未着手 | lucide等も検討 |
@@ -68,7 +69,7 @@
 | se-reel-loop | リール回転ループ | 回転中 | P1 | wav/ogg | 0.5-1.5秒 | 未着手 | ループ可能 |
 | se-payout | 払出音 | 払出/クレジット加算 | P0 | wav/ogg | 0.1-0.5秒 | 未着手 | 連続再生対応 |
 | se-credit | クレジット音 | クレジット投入/加算 | P1 | wav/ogg | 0.1-0.4秒 | 未着手 | 払出音と分離 |
-| se-notice | 告知音 | ランプ点灯 | P0 | wav/ogg | 0.5-2.0秒 | 未着手 | Aタイプの核 |
+| se-notice | 告知音 | ランプ点灯 | P0 | wav/ogg | 0.5-2.0秒 | 未着手 | ATypeの核 |
 | se-big-start | BIG開始ジングル | BIG開始 | P1 | wav/ogg | 2-6秒 | 未着手 | BGM導入 |
 | se-reg-start | REG開始ジングル | REG開始 | P1 | wav/ogg | 1-4秒 | 未着手 | BIGと差別化 |
 | se-bonus-end | ボーナス終了音 | 終了表示 | P1 | wav/ogg | 1-4秒 | 未着手 | 結果表示と同期 |
