@@ -1,0 +1,45 @@
+{
+  "BLANK": {
+    "label": "役なし",
+    "src": "assets/images/symbols/symbol-blank.png",
+    "concept": "薄いロゴ/アイコン"
+  },
+  "BELL": {
+    "label": "ベル",
+    "src": "assets/images/symbols/symbol-bell.png",
+    "concept": "AIヘアピン"
+  },
+  "REPLAY": {
+    "label": "リプレイ",
+    "src": "assets/images/symbols/symbol-replay.png",
+    "concept": "ぷにけがREPLAYの青い丸を持つ"
+  },
+  "CHERRY": {
+    "label": "チェリー",
+    "src": "assets/images/symbols/symbol-cherry.png",
+    "concept": "Masterニケちゃんのポーランドヘアピン"
+  },
+  "WATERMELON": {
+    "label": "スイカ",
+    "src": "assets/images/symbols/symbol-watermelon.png",
+    "concept": "AITuberの緑シャツ"
+  },
+  "AI_NIKECHAN": {
+    "label": "AIニケちゃん",
+    "src": "assets/images/symbols/symbol-ai-nikechan.png",
+    "concept": "7代替のボーナス図柄",
+    "flag": "BIG"
+  },
+  "MASTER_NIKECHAN": {
+    "label": "Masterニケちゃん",
+    "src": "assets/images/symbols/symbol-master-nikechan.png",
+    "concept": "7代替のボーナス図柄",
+    "flag": "BIG"
+  },
+  "LOGO_BAR": {
+    "label": "ニケちゃんロゴBAR",
+    "src": "assets/images/symbols/symbol-logo-bar.png",
+    "concept": "BAR代替の黒背景ロゴプレート",
+    "flag": "REG"
+  }
+}

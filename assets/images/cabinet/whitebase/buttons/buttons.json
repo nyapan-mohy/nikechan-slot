@@ -1,0 +1,72 @@
+{
+  "maxbet": {
+    "box": {
+      "x": 108,
+      "y": 923,
+      "w": 111,
+      "h": 76
+    },
+    "on": "assets/images/cabinet/whitebase/buttons/maxbet-on.png",
+    "off": "assets/images/cabinet/whitebase/buttons/maxbet-off.png"
+  },
+  "1bet": {
+    "box": {
+      "x": 254,
+      "y": 931,
+      "w": 89,
+      "h": 67
+    },
+    "on": "assets/images/cabinet/whitebase/buttons/1bet-on.png",
+    "off": "assets/images/cabinet/whitebase/buttons/1bet-off.png"
+  },
+  "start": {
+    "box": {
+      "x": 423,
+      "y": 931,
+      "w": 119,
+      "h": 62
+    },
+    "on": "assets/images/cabinet/whitebase/buttons/start-on.png",
+    "off": "assets/images/cabinet/whitebase/buttons/start-off.png"
+  },
+  "payout": {
+    "box": {
+      "x": 756,
+      "y": 842,
+      "w": 80,
+      "h": 58
+    },
+    "on": "assets/images/cabinet/whitebase/buttons/payout-on.png",
+    "off": "assets/images/cabinet/whitebase/buttons/payout-off.png"
+  },
+  "stop-left": {
+    "box": {
+      "x": 309,
+      "y": 1063,
+      "w": 96,
+      "h": 96
+    },
+    "on": "assets/images/cabinet/whitebase/buttons/stop-left-on.png",
+    "off": "assets/images/cabinet/whitebase/buttons/stop-left-off.png"
+  },
+  "stop-center": {
+    "box": {
+      "x": 432,
+      "y": 1062,
+      "w": 94,
+      "h": 97
+    },
+    "on": "assets/images/cabinet/whitebase/buttons/stop-center-on.png",
+    "off": "assets/images/cabinet/whitebase/buttons/stop-center-off.png"
+  },
+  "stop-right": {
+    "box": {
+      "x": 550,
+      "y": 1062,
+      "w": 94,
+      "h": 97
+    },
+    "on": "assets/images/cabinet/whitebase/buttons/stop-right-on.png",
+    "off": "assets/images/cabinet/whitebase/buttons/stop-right-off.png"
+  }
+}

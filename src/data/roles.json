@@ -1,0 +1,98 @@
+{
+  "roles": [
+    {
+      "id": "REPLAY",
+      "type": "replay",
+      "winningPattern": [
+        "REPLAY",
+        "REPLAY",
+        "REPLAY"
+      ],
+      "payout": 0,
+      "replay": true
+    },
+    {
+      "id": "BELL",
+      "type": "smallRole",
+      "rarity": "normal",
+      "requiresAim": false,
+      "winningPattern": [
+        "BELL",
+        "BELL",
+        "BELL"
+      ],
+      "payout": 5
+    },
+    {
+      "id": "RARE_CHERRY",
+      "type": "smallRole",
+      "rarity": "rare",
+      "requiresAim": true,
+      "winningPattern": [
+        "CHERRY",
+        "ANY",
+        "ANY"
+      ],
+      "payout": 2,
+      "cornerPayout": 4,
+      "missResultTags": [
+        "rareMiss",
+        "chancePattern"
+      ]
+    },
+    {
+      "id": "SUIKA",
+      "type": "smallRole",
+      "rarity": "rare",
+      "requiresAim": true,
+      "winningPattern": [
+        "SUIKA",
+        "SUIKA",
+        "SUIKA"
+      ],
+      "payout": 15,
+      "missResultTags": [
+        "suikaMiss",
+        "chancePattern"
+      ]
+    },
+    {
+      "id": "BIG",
+      "type": "bonus",
+      "bonusType": "BIG",
+      "winningPattern": [
+        [
+          "AI_NIKECHAN",
+          "MASTER_NIKECHAN"
+        ],
+        [
+          "AI_NIKECHAN",
+          "MASTER_NIKECHAN"
+        ],
+        [
+          "AI_NIKECHAN",
+          "MASTER_NIKECHAN"
+        ]
+      ],
+      "payout": 0
+    },
+    {
+      "id": "REG",
+      "type": "bonus",
+      "bonusType": "REG",
+      "winningPattern": [
+        "LOGO_BAR",
+        "LOGO_BAR",
+        "LOGO_BAR"
+      ],
+      "payout": 0
+    },
+    {
+      "id": "REACH",
+      "type": "nonWinningResult",
+      "winningPattern": null,
+      "payout": 0,
+      "resultTag": "reachPattern"
+    }
+  ]
+}

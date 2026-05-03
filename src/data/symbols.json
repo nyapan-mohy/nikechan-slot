@@ -1,0 +1,47 @@
+{
+  "symbols": [
+    {
+      "id": "AI_NIKECHAN",
+      "label": "AIニケちゃん",
+      "type": "bonus",
+      "bonusType": "BIG"
+    },
+    {
+      "id": "MASTER_NIKECHAN",
+      "label": "Masterニケちゃん",
+      "type": "bonus",
+      "bonusType": "BIG"
+    },
+    {
+      "id": "LOGO_BAR",
+      "label": "ニケちゃんロゴBAR",
+      "type": "bonus",
+      "bonusType": "REG"
+    },
+    {
+      "id": "BELL",
+      "label": "ベル",
+      "type": "smallRole"
+    },
+    {
+      "id": "CHERRY",
+      "label": "チェリー",
+      "type": "smallRole"
+    },
+    {
+      "id": "SUIKA",
+      "label": "スイカ",
+      "type": "smallRole"
+    },
+    {
+      "id": "REPLAY",
+      "label": "リプレイ",
+      "type": "replay"
+    },
+    {
+      "id": "BLANK",
+      "label": "ブランク",
+      "type": "blank"
+    }
+  ]
+}

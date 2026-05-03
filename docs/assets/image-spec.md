@@ -18,8 +18,14 @@
 ## 命名規則
 
 ```text
-assets/images/symbols/symbol-red7.png
-assets/images/symbols/symbol-bar.png
+assets/images/symbols/symbol-ai-nikechan.png
+assets/images/symbols/symbol-master-nikechan.png
+assets/images/symbols/symbol-logo-bar.png
+assets/images/symbols/symbol-bell.png
+assets/images/symbols/symbol-replay.png
+assets/images/symbols/symbol-cherry.png
+assets/images/symbols/symbol-watermelon.png
+assets/images/symbols/symbol-blank.png
 assets/images/reel-strips/reel-strip-left.png
 assets/images/lamps/lamp-on.png
 assets/images/lcd/lcd-bg-normal.png

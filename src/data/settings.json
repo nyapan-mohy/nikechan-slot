@@ -1,0 +1,88 @@
+{
+  "game": {
+    "reelCount": 3,
+    "stops": [
+      "left",
+      "center",
+      "right"
+    ],
+    "reelLength": 21,
+    "visibleRows": 3,
+    "activeLines": [
+      "top",
+      "center",
+      "bottom",
+      "downDiagonal",
+      "upDiagonal"
+    ],
+    "maxBet": 3,
+    "normalBet": 3,
+    "bonusBet": 2,
+    "initialCredit": 10000,
+    "maxSlip": 5,
+    "defaultSeed": "0x12345678"
+  },
+  "defaultSettingId": "setting1",
+  "settings": [
+    {
+      "id": "setting1",
+      "label": "設定1",
+      "lotteryTableId": "normal-setting1",
+      "bonusFlaggedTableId": "bonus-flagged-setting1",
+      "bigTableId": "big-setting1",
+      "regTableId": "reg-setting1",
+      "expectedPayoutRate": 99.0,
+      "expectedBaseGamesPer50": 40.0
+    },
+    {
+      "id": "setting2",
+      "label": "設定2",
+      "lotteryTableId": "normal-setting2",
+      "bonusFlaggedTableId": "bonus-flagged-setting2",
+      "bigTableId": "big-setting2",
+      "regTableId": "reg-setting2",
+      "expectedPayoutRate": 100.0,
+      "expectedBaseGamesPer50": 40.0
+    },
+    {
+      "id": "setting3",
+      "label": "設定3",
+      "lotteryTableId": "normal-setting3",
+      "bonusFlaggedTableId": "bonus-flagged-setting3",
+      "bigTableId": "big-setting3",
+      "regTableId": "reg-setting3",
+      "expectedPayoutRate": 101.3,
+      "expectedBaseGamesPer50": 40.0
+    },
+    {
+      "id": "setting4",
+      "label": "設定4",
+      "lotteryTableId": "normal-setting4",
+      "bonusFlaggedTableId": "bonus-flagged-setting4",
+      "bigTableId": "big-setting4",
+      "regTableId": "reg-setting4",
+      "expectedPayoutRate": 103.1,
+      "expectedBaseGamesPer50": 40.0
+    },
+    {
+      "id": "setting5",
+      "label": "設定5",
+      "lotteryTableId": "normal-setting5",
+      "bonusFlaggedTableId": "bonus-flagged-setting5",
+      "bigTableId": "big-setting5",
+      "regTableId": "reg-setting5",
+      "expectedPayoutRate": 105.0,
+      "expectedBaseGamesPer50": 40.0
+    },
+    {
+      "id": "setting6",
+      "label": "設定6",
+      "lotteryTableId": "normal-setting6",
+      "bonusFlaggedTableId": "bonus-flagged-setting6",
+      "bigTableId": "big-setting6",
+      "regTableId": "reg-setting6",
+      "expectedPayoutRate": 108.5,
+      "expectedBaseGamesPer50": 40.0
+    }
+  ]
+}

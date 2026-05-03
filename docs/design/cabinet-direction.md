@@ -21,7 +21,7 @@
 
 ### 黒ベース案
 
-対象: `idea/img/600404b7-5ecb-4570-a5c2-1f7c3587a6a0.png`
+対象: `idea/img/stars.png`
 
 採用候補:
 
@@ -37,7 +37,7 @@
 
 ### 白筐体案
 
-対象: `idea/img/aeb3ef08-ebb7-4ec8-834f-fe1ce862779f.png`
+対象: `idea/img/whitebase.png`
 
 採用候補:
 
@@ -53,7 +53,7 @@
 
 ### 金装飾案
 
-対象: `idea/img/9370b4e6-e796-43b2-ac0a-3c11bf9f0e68.png`
+対象: `idea/img/crestal.png`
 
 採用候補:
 

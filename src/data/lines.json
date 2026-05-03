@@ -1,0 +1,56 @@
+{
+  "activeLineIds": [
+    "top",
+    "center",
+    "bottom",
+    "downDiagonal",
+    "upDiagonal"
+  ],
+  "lines": [
+    {
+      "id": "top",
+      "label": "上段",
+      "positions": {
+        "left": 0,
+        "center": 0,
+        "right": 0
+      }
+    },
+    {
+      "id": "center",
+      "label": "中段",
+      "positions": {
+        "left": 1,
+        "center": 1,
+        "right": 1
+      }
+    },
+    {
+      "id": "bottom",
+      "label": "下段",
+      "positions": {
+        "left": 2,
+        "center": 2,
+        "right": 2
+      }
+    },
+    {
+      "id": "downDiagonal",
+      "label": "右下がり",
+      "positions": {
+        "left": 0,
+        "center": 1,
+        "right": 2
+      }
+    },
+    {
+      "id": "upDiagonal",
+      "label": "右上がり",
+      "positions": {
+        "left": 2,
+        "center": 1,
+        "right": 0
+      }
+    }
+  ]
+}

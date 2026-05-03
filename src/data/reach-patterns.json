@@ -1,0 +1,96 @@
+{
+  "resultTag": "reachPattern",
+  "payout": 0,
+  "patterns": [
+    {
+      "id": "big-two-nikechan-left-center",
+      "bonusType": "BIG",
+      "lineId": "center",
+      "symbols": [
+        "AI_NIKECHAN",
+        "MASTER_NIKECHAN",
+        "LOGO_BAR"
+      ],
+      "tags": [
+        "reachPattern",
+        "bonusFlagged",
+        "bigHint"
+      ]
+    },
+    {
+      "id": "big-two-nikechan-left-right",
+      "bonusType": "BIG",
+      "lineId": "center",
+      "symbols": [
+        "AI_NIKECHAN",
+        "LOGO_BAR",
+        "MASTER_NIKECHAN"
+      ],
+      "tags": [
+        "reachPattern",
+        "bonusFlagged",
+        "bigHint"
+      ]
+    },
+    {
+      "id": "big-two-nikechan-center-right",
+      "bonusType": "BIG",
+      "lineId": "center",
+      "symbols": [
+        "LOGO_BAR",
+        "AI_NIKECHAN",
+        "MASTER_NIKECHAN"
+      ],
+      "tags": [
+        "reachPattern",
+        "bonusFlagged",
+        "bigHint"
+      ]
+    },
+    {
+      "id": "reg-two-logo-bar-left-center",
+      "bonusType": "REG",
+      "lineId": "center",
+      "symbols": [
+        "LOGO_BAR",
+        "LOGO_BAR",
+        "AI_NIKECHAN"
+      ],
+      "tags": [
+        "reachPattern",
+        "bonusFlagged",
+        "regHint"
+      ]
+    },
+    {
+      "id": "reg-two-logo-bar-left-right",
+      "bonusType": "REG",
+      "lineId": "center",
+      "symbols": [
+        "LOGO_BAR",
+        "AI_NIKECHAN",
+        "LOGO_BAR"
+      ],
+      "tags": [
+        "reachPattern",
+        "bonusFlagged",
+        "regHint"
+      ]
+    },
+    {
+      "id": "reg-two-logo-bar-center-right",
+      "bonusType": "REG",
+      "lineId": "center",
+      "symbols": [
+        "AI_NIKECHAN",
+        "LOGO_BAR",
+        "LOGO_BAR"
+      ],
+      "tags": [
+        "reachPattern",
+        "bonusFlagged",
+        "regHint"
+      ]
+    }
+  ]
+}

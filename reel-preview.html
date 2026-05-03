@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nikechan Slot Reel Preview</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101214;
+      --panel: #181b1f;
+      --text: #e7e9ed;
+      --muted: #9aa3af;
+      --accent: #37d67a;
+      --warn: #f4c542;
+      --line: #303741;
+      --button: #2b323b;
+      --button-hover: #37414c;
+      --cell: clamp(82px, 12vw, 128px);
+      --strip-height: calc(var(--cell) * 21);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #15181c;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+
+    .sub {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(320px, 600px) minmax(260px, 340px);
+      gap: 18px;
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      padding: 22px;
+      align-items: start;
+    }
+
+    .reel-panel,
+    .controls {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .reel-panel {
+      padding: 16px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .panel-head strong {
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 800;
+    }
+
+    .reel-window {
+      position: relative;
+      overflow: hidden;
+      padding: 12px;
+      border: 2px solid #3b4350;
+      border-radius: 8px;
+      background: #08090a;
+      box-shadow: inset 0 0 0 1px #050607;
+    }
+
+    .reels {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, var(--cell)));
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .reel {
+      --stop-y: var(--cell);
+      width: var(--cell);
+      height: calc(var(--cell) * 3);
+      border: 1px solid #d5dbe3;
+      border-radius: 6px;
+      background: #f4f6f8;
+      overflow: hidden;
+    }
+
+    .reel-track {
+      width: 100%;
+      transform: translateY(var(--stop-y));
+      transition: transform 180ms cubic-bezier(0.16, 0.84, 0.24, 1);
+      will-change: transform;
+    }
+
+    .reel-track img {
+      display: block;
+      width: 100%;
+      height: var(--strip-height);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .reel.is-spinning .reel-track {
+      animation: reel-spin 1s linear infinite;
+      transition: none;
+    }
+
+    @keyframes reel-spin {
+      from {
+        transform: translateY(var(--stop-y));
+      }
+      to {
+        transform: translateY(calc(var(--stop-y) + var(--strip-height)));
+      }
+    }
+
+    .payline {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 12px;
+      right: 12px;
+      height: 2px;
+      background: rgba(244, 197, 66, 0.8);
+      box-shadow: 0 0 10px rgba(244, 197, 66, 0.35);
+      pointer-events: none;
+    }
+
+    .shade {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      right: 0;
+      height: 30px;
+      pointer-events: none;
+    }
+
+    .shade--top {
+      top: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.62), transparent);
+    }
+
+    .shade--bottom {
+      bottom: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.62), transparent);
+    }
+
+    .controls {
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+    }
+
+    .play-actions {
+      display: grid;
+      gap: 8px;
+    }
+
+    .pull-control {
+      display: grid;
+      gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .pull-control label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    select {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--button);
+      color: var(--text);
+      font: inherit;
+      padding: 0 10px;
+    }
+
+    .stop-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    button {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--button);
+      color: var(--text);
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      letter-spacing: 0;
+    }
+
+    button:hover {
+      background: var(--button-hover);
+    }
+
+    button.primary {
+      border-color: #2bbf6a;
+      background: #1f6b43;
+    }
+
+    button.primary:hover {
+      background: #267a4e;
+    }
+
+    button.stop-button {
+      min-height: 56px;
+      border-color: #545f6f;
+      font-size: 18px;
+    }
+
+    button.stop-button[aria-pressed="true"] {
+      border-color: #6d5522;
+      background: #2b2415;
+      color: var(--warn);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.48;
+    }
+
+    .readout {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .readout span:nth-child(even) {
+      color: var(--text);
+    }
+
+    @media (max-width: 860px) {
+      .workspace {
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Nikechan Slot Reel Preview</h1>
+      <div class="sub">CSSリール帯スクロール方式</div>
+    </header>
+
+    <section class="workspace">
+      <section class="reel-panel" aria-label="リールプレビュー">
+        <div class="panel-head">
+          <span>リール窓</span>
+          <strong>1周 / 1秒</strong>
+        </div>
+        <div class="reel-window">
+          <div class="payline" aria-hidden="true"></div>
+          <div class="shade shade--top" aria-hidden="true"></div>
+          <div class="shade shade--bottom" aria-hidden="true"></div>
+          <div class="reels">
+            <div class="reel" id="reelLeft" aria-label="左リール">
+              <div class="reel-track">
+                <img src="./assets/images/reel-strips/reel-strip-left.png" alt="">
+                <img src="./assets/images/reel-strips/reel-strip-left.png" alt="">
+                <img src="./assets/images/reel-strips/reel-strip-left.png" alt="">
+              </div>
+            </div>
+            <div class="reel" id="reelCenter" aria-label="中リール">
+              <div class="reel-track">
+                <img src="./assets/images/reel-strips/reel-strip-center.png" alt="">
+                <img src="./assets/images/reel-strips/reel-strip-center.png" alt="">
+                <img src="./assets/images/reel-strips/reel-strip-center.png" alt="">
+              </div>
+            </div>
+            <div class="reel" id="reelRight" aria-label="右リール">
+              <div class="reel-track">
+                <img src="./assets/images/reel-strips/reel-strip-right.png" alt="">
+                <img src="./assets/images/reel-strips/reel-strip-right.png" alt="">
+                <img src="./assets/images/reel-strips/reel-strip-right.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="controls" aria-label="リール操作">
+        <div class="panel-head">
+          <span>操作部</span>
+          <strong id="spinStatus">READY</strong>
+        </div>
+        <div class="play-actions">
+          <button type="button" id="start" class="primary">START</button>
+          <div class="stop-actions">
+            <button type="button" id="stopLeft" class="stop-button" data-stop="left" disabled>1</button>
+            <button type="button" id="stopCenter" class="stop-button" data-stop="center" disabled>2</button>
+            <button type="button" id="stopRight" class="stop-button" data-stop="right" disabled>3</button>
+          </div>
+        </div>
+        <div class="pull-control">
+          <label>
+            引き込み
+            <select id="pullMode">
+              <option value="0">ビタ停止</option>
+              <option value="1">1コマ引き込み</option>
+              <option value="2">2コマ引き込み</option>
+              <option value="3" selected>3コマ引き込み</option>
+              <option value="4">4コマ引き込み</option>
+              <option value="random">ランダム 0-4</option>
+            </select>
+          </label>
+        </div>
+        <div class="readout" id="readout"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script type="module">
+    const reelKeys = ["left", "center", "right"];
+    const reels = {
+      left: document.getElementById("reelLeft"),
+      center: document.getElementById("reelCenter"),
+      right: document.getElementById("reelRight")
+    };
+    const stopButtons = {
+      left: document.getElementById("stopLeft"),
+      center: document.getElementById("stopCenter"),
+      right: document.getElementById("stopRight")
+    };
+    const startButton = document.getElementById("start");
+    const pullMode = document.getElementById("pullMode");
+    const readout = document.getElementById("readout");
+    const spinStatus = document.getElementById("spinStatus");
+    const reelPositions = { left: 0, center: 0, right: 0 };
+    const spinning = { left: false, center: false, right: false };
+    const spinStartedAt = { left: 0, center: 0, right: 0 };
+    const spinStartPositions = { left: 0, center: 0, right: 0 };
+    const lastStop = {
+      left: { push: 0, stop: 0, slip: 0 },
+      center: { push: 0, stop: 0, slip: 0 },
+      right: { push: 0, stop: 0, slip: 0 }
+    };
+    let reelData = null;
+
+    init();
+
+    async function init() {
+      reelData = await fetchJson("./src/data/reels.json");
+      startButton.addEventListener("click", startSpin);
+      Object.entries(stopButtons).forEach(([key, button]) => {
+        button.addEventListener("click", () => stopReel(key));
+      });
+      applyStops();
+      render();
+    }
+
+    function startSpin() {
+      const now = performance.now();
+      reelKeys.forEach(key => {
+        spinning[key] = true;
+        spinStartedAt[key] = now;
+        spinStartPositions[key] = reelPositions[key];
+        const track = trackFor(key);
+        const safeY = canonicalOffset(reelPositions[key]);
+        track.style.transition = "none";
+        reels[key].style.setProperty("--stop-y", `${safeY}px`);
+        track.style.transform = "";
+        track.getBoundingClientRect();
+        track.style.transition = "";
+        stopButtons[key].disabled = false;
+        stopButtons[key].setAttribute("aria-pressed", "false");
+        reels[key].classList.add("is-spinning");
+      });
+      render();
+    }
+
+    function stopReel(key) {
+      const track = trackFor(key);
+      const currentY = currentTrackY(track);
+      const pushStep = Math.ceil(currentY / cellSize());
+      const pushY = pushStep * cellSize();
+      const slip = selectedSlip();
+      const targetY = pushY + (slip * cellSize());
+      const visualPushPosition = visualPositionForOffset(pushY);
+
+      reelPositions[key] = positionForOffset(targetY);
+      lastStop[key] = {
+        push: visualPushPosition,
+        stop: mod(visualPushPosition + slip, reelLength()),
+        slip
+      };
+      spinning[key] = false;
+      snapReelDown(key, currentY, targetY);
+      stopButtons[key].disabled = true;
+      stopButtons[key].setAttribute("aria-pressed", "true");
+      render();
+    }
+
+    function applyStops() {
+      reelKeys.forEach(setReelOffset);
+    }
+
+    function setReelOffset(key) {
+      reels[key].style.setProperty("--stop-y", `${canonicalOffset(reelPositions[key])}px`);
+    }
+
+    function snapReelDown(key, currentY, targetY) {
+      const track = trackFor(key);
+      track.style.transition = "none";
+      track.style.transform = `translateY(${currentY}px)`;
+      reels[key].classList.remove("is-spinning");
+      track.getBoundingClientRect();
+      track.style.transition = "";
+      track.style.transform = `translateY(${targetY}px)`;
+      window.setTimeout(() => {
+        if (spinning[key]) return;
+        track.style.transition = "none";
+        setReelOffset(key);
+        track.style.transform = "";
+        track.getBoundingClientRect();
+        track.style.transition = "";
+      }, 220);
+    }
+
+    function canonicalOffset(position) {
+      return ((1 - mod(position, reelLength())) * cellSize()) - (stripHeight() * 2);
+    }
+
+    function trackFor(key) {
+      return reels[key].querySelector(".reel-track");
+    }
+
+    function currentTrackY(track) {
+      const transform = getComputedStyle(track).transform;
+      if (!transform || transform === "none") {
+        return Number.parseFloat(getComputedStyle(track).getPropertyValue("--stop-y")) || 0;
+      }
+      const values = transform.match(/matrix\\(([^)]+)\\)/)?.[1]?.split(",").map(Number);
+      return values?.[5] ?? 0;
+    }
+
+    function positionForOffset(offset) {
+      return mod(1 - Math.round((offset + stripHeight()) / cellSize()), reelLength());
+    }
+
+    function visualPositionForOffset(offset) {
+      return mod(Math.round((offset + stripHeight()) / cellSize()) - 1, reelLength());
+    }
+
+    function render() {
+      const anySpinning = reelKeys.some(key => spinning[key]);
+      spinStatus.textContent = anySpinning ? "SPINNING" : "READY";
+      readout.innerHTML = reelKeys.map(key => {
+        const symbols = reelData?.reels?.[key] ?? [];
+        const stop = lastStop[key];
+        const symbol = symbols[reelPositions[key]] ?? "-";
+        const value = spinning[key]
+          ? "SPIN"
+          : `${stop.stop} ${symbol} / push ${stop.push} slip ${stop.slip}`;
+        return `<span>${key}</span><span>${value}</span>`;
+      }).join("");
+    }
+
+    function selectedSlip() {
+      if (pullMode.value === "random") {
+        return Math.floor(Math.random() * 5);
+      }
+      return Math.max(0, Math.min(4, Number(pullMode.value) || 0));
+    }
+
+    async function fetchJson(path) {
+      const response = await fetch(path);
+      if (!response.ok) throw new Error(`${path}: ${response.status}`);
+      return response.json();
+    }
+
+    function reelLength() {
+      return reelData?.reelLength ?? 21;
+    }
+
+    function cellSize() {
+      return reels.left.getBoundingClientRect().width;
+    }
+
+    function stripHeight() {
+      return cellSize() * reelLength();
+    }
+
+    function mod(value, length) {
+      return ((value % length) + length) % length;
+    }
+  </script>
+</body>
+</html>

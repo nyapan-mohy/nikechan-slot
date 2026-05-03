@@ -1,0 +1,145 @@
+{
+  "maxSlip": 5,
+  "candidateOrder": "pressedPositionToPressedPlusMaxSlip",
+  "stopOrder": [
+    "left",
+    "center",
+    "right"
+  ],
+  "activeLineIds": [
+    "top",
+    "center",
+    "bottom",
+    "downDiagonal",
+    "upDiagonal"
+  ],
+  "priorities": [
+    {
+      "id": "avoidUnflaggedWinningPatterns",
+      "rank": 1
+    },
+    {
+      "id": "bonusDrawInWhenAimable",
+      "rank": 2
+    },
+    {
+      "id": "replayDrawInWhenBonusNotAimable",
+      "rank": 3
+    },
+    {
+      "id": "normalSmallRoleDrawInWhenBonusNotAimable",
+      "rank": 4
+    },
+    {
+      "id": "rareSmallRoleDrawInWhenAimableAndBonusNotAimable",
+      "rank": 5
+    },
+    {
+      "id": "rareMissPattern",
+      "rank": 6
+    },
+    {
+      "id": "reachPatternWhenBonusFlaggedAndNoWin",
+      "rank": 7
+    },
+    {
+      "id": "nonWinningPattern",
+      "rank": 8
+    }
+  ],
+  "drawInRoles": {
+    "BIG": {
+      "roleId": "BIG",
+      "symbols": {
+        "left": [
+          "AI_NIKECHAN",
+          "MASTER_NIKECHAN"
+        ],
+        "center": [
+          "AI_NIKECHAN",
+          "MASTER_NIKECHAN"
+        ],
+        "right": [
+          "AI_NIKECHAN",
+          "MASTER_NIKECHAN"
+        ]
+      },
+      "requiresAim": true,
+      "priorityGroup": "bonus"
+    },
+    "REG": {
+      "roleId": "REG",
+      "symbols": {
+        "left": "LOGO_BAR",
+        "center": "LOGO_BAR",
+        "right": "LOGO_BAR"
+      },
+      "requiresAim": true,
+      "priorityGroup": "bonus"
+    },
+    "REPLAY": {
+      "roleId": "REPLAY",
+      "symbols": {
+        "left": "REPLAY",
+        "center": "REPLAY",
+        "right": "REPLAY"
+      },
+      "requiresAim": false,
+      "priorityGroup": "replay"
+    },
+    "BELL": {
+      "roleId": "BELL",
+      "symbols": {
+        "left": "BELL",
+        "center": "BELL",
+        "right": "BELL"
+      },
+      "requiresAim": false,
+      "priorityGroup": "normalSmallRole"
+    },
+    "RARE_CHERRY": {
+      "roleId": "RARE_CHERRY",
+      "symbols": {
+        "left": "CHERRY",
+        "center": "ANY",
+        "right": "ANY"
+      },
+      "requiresAim": true,
+      "priorityGroup": "rareSmallRole",
+      "missResultTags": [
+        "rareMiss",
+        "chancePattern"
+      ]
+    },
+    "SUIKA": {
+      "roleId": "SUIKA",
+      "symbols": {
+        "left": "SUIKA",
+        "center": "SUIKA",
+        "right": "SUIKA"
+      },
+      "requiresAim": true,
+      "priorityGroup": "rareSmallRole",
+      "missResultTags": [
+        "suikaMiss",
+        "chancePattern"
+      ]
+    }
+  },
+  "forbiddenWhenUnflagged": [
+    "BIG",
+    "REG",
+    "REPLAY",
+    "BELL",
+    "RARE_CHERRY",
+    "SUIKA"
+  ],
+  "bonusFlaggedRules": {
+    "lotteryTablePrefix": "bonus-flagged",
+    "allowNewBonus": false,
+    "bonusDrawInPriority": "highestWhenAimable",
+    "allowSmallRoleWhenBonusNotAimable": true,
+    "allowReplayWhenBonusNotAimable": true,
+    "noWinTag": "reachPattern"
+  }
+}

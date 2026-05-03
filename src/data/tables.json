@@ -1,0 +1,329 @@
+{
+  "denominator": 65536,
+  "tables": [
+    {
+      "id": "normal-setting1",
+      "settingId": "setting1",
+      "state": "normal",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": "BIG", "smallRole": null, "isReplay": false }, "weight": 211 },
+        { "result": { "bonus": "REG", "smallRole": null, "isReplay": false }, "weight": 112 },
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12025 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1841 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 16640 },
+        { "result": { "bonus": "BIG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 46 },
+        { "result": { "bonus": "REG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 45 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 34552 }
+      ]
+    },
+    {
+      "id": "normal-setting2",
+      "settingId": "setting2",
+      "state": "normal",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": "BIG", "smallRole": null, "isReplay": false }, "weight": 213 },
+        { "result": { "bonus": "REG", "smallRole": null, "isReplay": false }, "weight": 118 },
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12092 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1841 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 16529 },
+        { "result": { "bonus": "BIG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 48 },
+        { "result": { "bonus": "REG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 49 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 34582 }
+      ]
+    },
+    {
+      "id": "normal-setting3",
+      "settingId": "setting3",
+      "state": "normal",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": "BIG", "smallRole": null, "isReplay": false }, "weight": 218 },
+        { "result": { "bonus": "REG", "smallRole": null, "isReplay": false }, "weight": 133 },
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12181 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1841 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 16380 },
+        { "result": { "bonus": "BIG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 48 },
+        { "result": { "bonus": "REG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 51 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 34620 }
+      ]
+    },
+    {
+      "id": "normal-setting4",
+      "settingId": "setting4",
+      "state": "normal",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": "BIG", "smallRole": null, "isReplay": false }, "weight": 225 },
+        { "result": { "bonus": "REG", "smallRole": null, "isReplay": false }, "weight": 149 },
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12273 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1841 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 16227 },
+        { "result": { "bonus": "BIG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 48 },
+        { "result": { "bonus": "REG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 57 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 34652 }
+      ]
+    },
+    {
+      "id": "normal-setting5",
+      "settingId": "setting5",
+      "state": "normal",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": "BIG", "smallRole": null, "isReplay": false }, "weight": 229 },
+        { "result": { "bonus": "REG", "smallRole": null, "isReplay": false }, "weight": 172 },
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12412 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1841 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 15995 },
+        { "result": { "bonus": "BIG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 51 },
+        { "result": { "bonus": "REG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 57 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 34715 }
+      ]
+    },
+    {
+      "id": "normal-setting6",
+      "settingId": "setting6",
+      "state": "normal",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": "BIG", "smallRole": null, "isReplay": false }, "weight": 248 },
+        { "result": { "bonus": "REG", "smallRole": null, "isReplay": false }, "weight": 191 },
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12603 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1841 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 15677 },
+        { "result": { "bonus": "BIG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 52 },
+        { "result": { "bonus": "REG", "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 34796 }
+      ]
+    },
+    {
+      "id": "bonus-flagged-setting1",
+      "settingId": "setting1",
+      "state": "bonusFlagged",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12025 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1932 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 16640 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 34875 }
+      ]
+    },
+    {
+      "id": "bonus-flagged-setting2",
+      "settingId": "setting2",
+      "state": "bonusFlagged",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12092 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1938 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 16529 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 34913 }
+      ]
+    },
+    {
+      "id": "bonus-flagged-setting3",
+      "settingId": "setting3",
+      "state": "bonusFlagged",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12181 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1940 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 16380 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 34971 }
+      ]
+    },
+    {
+      "id": "bonus-flagged-setting4",
+      "settingId": "setting4",
+      "state": "bonusFlagged",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12273 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1946 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 16227 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 35026 }
+      ]
+    },
+    {
+      "id": "bonus-flagged-setting5",
+      "settingId": "setting5",
+      "state": "bonusFlagged",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12412 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1949 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 15995 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 35116 }
+      ]
+    },
+    {
+      "id": "bonus-flagged-setting6",
+      "settingId": "setting6",
+      "state": "bonusFlagged",
+      "bet": 3,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 12603 },
+        { "result": { "bonus": null, "smallRole": "RARE_CHERRY", "isReplay": false }, "weight": 1957 },
+        { "result": { "bonus": null, "smallRole": "SUIKA", "isReplay": false }, "weight": 64 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": true }, "weight": 15677 },
+        { "result": { "bonus": null, "smallRole": null, "isReplay": false }, "weight": 35235 }
+      ]
+    },
+    {
+      "id": "big-setting1",
+      "settingId": "setting1",
+      "state": "bonusActive",
+      "bonusType": "BIG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    },
+    {
+      "id": "big-setting2",
+      "settingId": "setting2",
+      "state": "bonusActive",
+      "bonusType": "BIG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    },
+    {
+      "id": "big-setting3",
+      "settingId": "setting3",
+      "state": "bonusActive",
+      "bonusType": "BIG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    },
+    {
+      "id": "big-setting4",
+      "settingId": "setting4",
+      "state": "bonusActive",
+      "bonusType": "BIG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    },
+    {
+      "id": "big-setting5",
+      "settingId": "setting5",
+      "state": "bonusActive",
+      "bonusType": "BIG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    },
+    {
+      "id": "big-setting6",
+      "settingId": "setting6",
+      "state": "bonusActive",
+      "bonusType": "BIG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    },
+    {
+      "id": "reg-setting1",
+      "settingId": "setting1",
+      "state": "bonusActive",
+      "bonusType": "REG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    },
+    {
+      "id": "reg-setting2",
+      "settingId": "setting2",
+      "state": "bonusActive",
+      "bonusType": "REG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    },
+    {
+      "id": "reg-setting3",
+      "settingId": "setting3",
+      "state": "bonusActive",
+      "bonusType": "REG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    },
+    {
+      "id": "reg-setting4",
+      "settingId": "setting4",
+      "state": "bonusActive",
+      "bonusType": "REG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    },
+    {
+      "id": "reg-setting5",
+      "settingId": "setting5",
+      "state": "bonusActive",
+      "bonusType": "REG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    },
+    {
+      "id": "reg-setting6",
+      "settingId": "setting6",
+      "state": "bonusActive",
+      "bonusType": "REG",
+      "bet": 2,
+      "denominator": 65536,
+      "entries": [
+        { "result": { "bonus": null, "smallRole": "BELL", "isReplay": false }, "weight": 65536 }
+      ]
+    }
+  ]
+}

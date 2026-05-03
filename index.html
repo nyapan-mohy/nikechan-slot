@@ -1,0 +1,1408 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nikechan Slot Main Board Log Simulator</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #111315;
+      --panel: #181b1f;
+      --panel-2: #20242a;
+      --text: #e7e9ed;
+      --muted: #9aa3af;
+      --accent: #37d67a;
+      --warn: #f4c542;
+      --danger: #ff6b6b;
+      --line: #303741;
+      --button: #2b323b;
+      --button-hover: #37414c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+    }
+
+    header {
+      padding: 18px 20px 12px;
+      border-bottom: 1px solid var(--line);
+      background: #15181c;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .sub {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .http-warning {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border: 1px solid #6d5522;
+      border-radius: 6px;
+      background: #2b2415;
+      color: var(--warn);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .http-warning[hidden] {
+      display: none;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      padding: 14px 20px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+
+    label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    select,
+    input,
+    button {
+      width: 100%;
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--button);
+      color: var(--text);
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    input,
+    select {
+      padding: 0 10px;
+    }
+
+    button {
+      cursor: pointer;
+      font-weight: 650;
+    }
+
+    button:hover {
+      background: var(--button-hover);
+    }
+
+    button.primary {
+      border-color: #2bbf6a;
+      background: #1f6b43;
+    }
+
+    button.primary:hover {
+      background: #267a4e;
+    }
+
+    button.danger {
+      border-color: #8f3c3c;
+      background: #552529;
+    }
+
+    .machine-stage {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 12%, rgba(245, 108, 213, 0.18), transparent 34%),
+        #101214;
+    }
+
+    .machine-stage__inner {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .cabinet-machine {
+      position: relative;
+      aspect-ratio: 941 / 1671;
+      min-height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #f5f2f5 url("./assets/images/cabinet/whitebase/base-on.png") center / contain no-repeat;
+      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
+    }
+
+    .cabinet-machine::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: none;
+      pointer-events: none;
+    }
+
+    .cabinet-machine__lcd,
+    .cabinet-machine__notice,
+    .cabinet-machine__meter,
+    .cabinet-machine__control,
+    .cabinet-machine__button {
+      position: absolute;
+      z-index: 2;
+    }
+
+    .cabinet-machine__lcd {
+      z-index: 1;
+      left: 11.16%;
+      top: 9.04%;
+      width: 77.36%;
+      height: 19.93%;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      border-radius: 4px;
+      background:
+        radial-gradient(circle at 58% 38%, rgba(255, 98, 213, 0.34), transparent 32%),
+        linear-gradient(135deg, rgba(15, 9, 45, 0.88), rgba(6, 12, 30, 0.72));
+      color: rgba(255, 255, 255, 0.86);
+      font-size: clamp(18px, 4vw, 48px);
+      font-weight: 900;
+      letter-spacing: 0;
+      text-shadow: 0 0 16px rgba(251, 83, 198, 0.75);
+    }
+
+    .cabinet-machine__lcd.is-bonus {
+      color: #fff7fb;
+      background:
+        radial-gradient(circle at 50% 46%, rgba(255, 96, 211, 0.7), transparent 34%),
+        linear-gradient(135deg, rgba(51, 14, 77, 0.92), rgba(9, 16, 45, 0.74));
+    }
+
+    .cabinet-machine__notice {
+      z-index: 3;
+      left: 11.58%;
+      top: 29.26%;
+      width: 77.05%;
+      height: 6.04%;
+      display: grid;
+      place-items: center;
+      border-radius: 4px;
+      background: transparent;
+      color: transparent;
+      font-size: clamp(15px, 3.2vw, 36px);
+      font-weight: 900;
+      letter-spacing: 0;
+      text-shadow: none;
+    }
+
+    .cabinet-machine__notice.is-bonus {
+      color: #fff8fb;
+      background: rgba(16, 8, 25, 0.72);
+      text-shadow:
+        0 0 8px rgba(255, 255, 255, 0.82),
+        0 0 24px rgba(255, 61, 190, 0.95);
+    }
+
+    .cabinet-machine__reel {
+      position: absolute;
+      z-index: 3;
+      left: 11.58%;
+      top: 34.71%;
+      width: 77.05%;
+      height: 14.48%;
+      overflow: hidden;
+    }
+
+    .cabinet-machine__meter {
+      z-index: 4;
+      left: 35.81%;
+      top: 49.79%;
+      width: 33.05%;
+      height: 4.13%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11%;
+      align-items: center;
+      color: #ff3458;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: clamp(12px, 2.5vw, 30px);
+      font-weight: 800;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(255, 42, 77, 0.95);
+      pointer-events: none;
+    }
+
+    .cabinet-machine__meter span {
+      display: block;
+      min-width: 0;
+      padding: 0.02em 0.12em;
+      border-radius: 3px;
+      background: rgba(8, 0, 8, 0.88);
+      line-height: 1.05;
+    }
+
+    .cabinet-machine__control {
+      appearance: none;
+      position: absolute;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background-color: transparent;
+      color: transparent;
+      font-size: clamp(9px, 1.7vw, 18px);
+      font-weight: 900;
+      letter-spacing: 0;
+      text-align: center;
+      text-shadow: none;
+      box-shadow: none;
+      cursor: default;
+    }
+
+    .cabinet-machine__control--maxbet {
+      left: 11.48%;
+      top: 55.24%;
+      width: 11.8%;
+      height: 4.55%;
+      --button-off: url("./assets/images/cabinet/whitebase/buttons/maxbet-off.png");
+      --button-on: url("./assets/images/cabinet/whitebase/buttons/maxbet-on.png");
+    }
+
+    .cabinet-machine__control--start {
+      left: 44.95%;
+      top: 55.72%;
+      width: 12.65%;
+      height: 3.71%;
+      --button-off: url("./assets/images/cabinet/whitebase/buttons/start-off.png");
+      --button-on: url("./assets/images/cabinet/whitebase/buttons/start-on.png");
+    }
+
+    .cabinet-machine__button {
+      appearance: none;
+      position: absolute;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background-color: transparent;
+      color: transparent;
+      font-size: clamp(8px, 1.4vw, 15px);
+      font-weight: 900;
+      text-shadow: none;
+      box-shadow: none;
+      cursor: default;
+    }
+
+    .cabinet-machine__control::before,
+    .cabinet-machine__button::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background-image: var(--button-off);
+      background-position: center;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      pointer-events: none;
+    }
+
+    .cabinet-machine__control:disabled,
+    .cabinet-machine__button:disabled {
+      opacity: 1;
+      filter: none;
+    }
+
+    .cabinet-machine__control.is-enabled,
+    .cabinet-machine__button.is-enabled {
+      cursor: pointer;
+      opacity: 1;
+      filter: none;
+    }
+
+    .cabinet-machine__control.is-enabled::before,
+    .cabinet-machine__button.is-enabled::before {
+      background-image: var(--button-on);
+    }
+
+    .cabinet-machine__control.is-active,
+    .cabinet-machine__button.is-active {
+      outline: 0;
+      box-shadow: none;
+    }
+
+    .cabinet-machine__control.is-pressed,
+    .cabinet-machine__button.is-pressed {
+      transform: translateY(1px) scale(0.97);
+      filter: brightness(0.86);
+    }
+
+    .cabinet-machine__control.is-pressed::before,
+    .cabinet-machine__button.is-pressed::before {
+      background-image: var(--button-off);
+    }
+
+    .cabinet-machine__button--left {
+      left: 32.84%;
+      top: 63.61%;
+      width: 10.2%;
+      height: 5.75%;
+      --button-off: url("./assets/images/cabinet/whitebase/buttons/stop-left-off.png");
+      --button-on: url("./assets/images/cabinet/whitebase/buttons/stop-left-on.png");
+    }
+
+    .cabinet-machine__button--center {
+      left: 45.91%;
+      top: 63.55%;
+      width: 9.99%;
+      height: 5.8%;
+      --button-off: url("./assets/images/cabinet/whitebase/buttons/stop-center-off.png");
+      --button-on: url("./assets/images/cabinet/whitebase/buttons/stop-center-on.png");
+    }
+
+    .cabinet-machine__button--right {
+      left: 58.45%;
+      top: 63.55%;
+      width: 9.99%;
+      height: 5.8%;
+      --button-off: url("./assets/images/cabinet/whitebase/buttons/stop-right-off.png");
+      --button-on: url("./assets/images/cabinet/whitebase/buttons/stop-right-on.png");
+    }
+
+    .reel-panel,
+    .notice-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #181b1f;
+    }
+
+    .reel-panel {
+      padding: 16px;
+    }
+
+    .reel-panel__head,
+    .notice-panel__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .reel-panel__status {
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .reel-window__frame {
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #3b4350;
+      border-radius: 8px;
+      background: #08090a;
+      box-shadow: inset 0 0 0 1px #050607;
+    }
+
+    .cabinet-machine .reel-window__frame {
+      width: 100%;
+      height: 100%;
+      border-width: 1px;
+      border-radius: 3px;
+      background: rgba(3, 4, 5, 0.92);
+      box-shadow:
+        inset 0 0 0 1px rgba(0, 0, 0, 0.9),
+        0 0 18px rgba(255, 66, 193, 0.22);
+    }
+
+    .reel-window__reels {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      padding: 12px;
+    }
+
+    .cabinet-machine .reel-window__reels {
+      height: 100%;
+      gap: 3px;
+      padding: 4px;
+    }
+
+    .reel-window__reel {
+      display: grid;
+      grid-template-rows: repeat(3, minmax(82px, 1fr));
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .cabinet-machine .reel-window__reel {
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: 2px;
+    }
+
+    .cabinet-machine .reel-window__reel.is-spinning {
+      height: 300%;
+      grid-template-rows: repeat(9, minmax(0, 1fr));
+      animation: reel-spin 0.18s linear infinite;
+      filter: blur(0.5px);
+    }
+
+    .reel-window__cell {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      aspect-ratio: 1 / 0.72;
+      border: 1px solid #d5dbe3;
+      border-radius: 6px;
+      background: #f4f6f8;
+      color: #1b2026;
+      overflow: hidden;
+    }
+
+    .cabinet-machine .reel-window__cell {
+      aspect-ratio: auto;
+      min-height: 0;
+      border-radius: 2px;
+      border-color: rgba(213, 219, 227, 0.78);
+    }
+
+    .reel-window__cell.is-payline {
+      border-color: #f4c542;
+      box-shadow: inset 0 0 0 2px rgba(244, 197, 66, 0.3);
+    }
+
+    .reel-window__cell img {
+      width: 78%;
+      height: 78%;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .reel-window__cell span {
+      position: absolute;
+      right: 5px;
+      bottom: 4px;
+      max-width: calc(100% - 10px);
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.82);
+      color: #242a31;
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1.1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .cabinet-machine .reel-window__cell span {
+      right: 2px;
+      bottom: 2px;
+      padding: 1px 3px;
+      font-size: clamp(7px, 1vw, 10px);
+    }
+
+    @keyframes reel-spin {
+      from {
+        transform: translateY(-33.333%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .reel-window__payline {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 12px;
+      right: 12px;
+      height: 2px;
+      background: rgba(244, 197, 66, 0.75);
+      box-shadow: 0 0 10px rgba(244, 197, 66, 0.35);
+      pointer-events: none;
+    }
+
+    .reel-window__shade {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      right: 0;
+      height: 24px;
+      pointer-events: none;
+    }
+
+    .reel-window__shade--top {
+      top: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent);
+    }
+
+    .reel-window__shade--bottom {
+      bottom: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+    }
+
+    .notice-panel {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      padding: 16px;
+      min-height: 100%;
+    }
+
+    .notice-panel__lamp {
+      display: grid;
+      place-items: center;
+      min-height: 160px;
+      border: 1px solid #323945;
+      border-radius: 8px;
+      background: #101316;
+      color: #5f6875;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(260px, 320px) minmax(300px, 420px) 1fr;
+      min-height: 0;
+    }
+
+    .state,
+    .terminal-panel {
+      padding: 18px 20px;
+      background: var(--panel);
+      border-right: 1px solid var(--line);
+      overflow: auto;
+    }
+
+    .state h2,
+    .terminal-panel h2 {
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+
+    .kv {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .kv span:nth-child(odd) {
+      color: var(--muted);
+    }
+
+    .status {
+      color: var(--accent);
+    }
+
+    .warning {
+      color: var(--warn);
+    }
+
+    .data-terminal {
+      display: grid;
+      gap: 14px;
+    }
+
+    .data-terminal__grid,
+    .data-terminal__roles {
+      display: grid;
+      gap: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .data-terminal__grid {
+      grid-template-columns: 1fr auto;
+    }
+
+    .data-terminal__grid span:nth-child(odd),
+    .data-terminal__role span:first-child,
+    .data-terminal__section-title,
+    .data-terminal__history {
+      color: var(--muted);
+    }
+
+    .data-terminal__section-title {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+    }
+
+    .data-terminal__role {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+    }
+
+    .data-terminal__history {
+      overflow-wrap: anywhere;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .slump-canvas {
+      display: block;
+      width: 100%;
+      height: 180px;
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #0d0f11;
+    }
+
+    .log-wrap {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      background: #0d0f11;
+    }
+
+    .log-head {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #13161a;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      overflow: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #cdebd8;
+    }
+
+    @media (max-width: 980px) {
+      .toolbar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .machine-stage__inner {
+        max-width: min(100%, 620px);
+      }
+
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .state,
+      .terminal-panel {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Nikechan Slot Main Board Log Simulator</h1>
+      <div class="sub">第一段階: メイン基板相当の抽選、停止制御、入賞、払出、状態遷移をログで確認する画面</div>
+      <div class="http-warning" id="httpWarning">HTTP配信URLで開いてください。file:// 直開きではESM/fetchがブロックされる可能性があります。</div>
+    </header>
+
+    <section class="toolbar" aria-label="操作">
+      <label>
+        設定
+        <select id="setting">
+          <option value="setting1">設定1</option>
+          <option value="setting2">設定2</option>
+          <option value="setting3">設定3</option>
+          <option value="setting4">設定4</option>
+          <option value="setting5">設定5</option>
+          <option value="setting6">設定6</option>
+        </select>
+      </label>
+      <label>
+        Seed
+        <input id="seed" value="0x12345678" spellcheck="false">
+      </label>
+      <label>
+        押下戦略
+        <select id="pushStrategy">
+          <option value="pseudoRandom">疑似ランダム</option>
+          <option value="fixed">固定押下</option>
+          <option value="bonusAim">ボーナス狙い</option>
+          <option value="rareAim">レア小役狙い</option>
+        </select>
+      </label>
+      <label>
+        最大ゲーム
+        <input id="maxGames" type="number" min="1" max="10000" value="10000">
+      </label>
+      <label>
+        実行
+        <button id="step" class="primary">1ゲーム実行</button>
+      </label>
+      <label>
+        Bonus
+        <button id="runUntilBonus">Bonusまで実行</button>
+      </label>
+      <label>
+        Auto
+        <button id="autoMode" aria-pressed="false">オート開始</button>
+      </label>
+      <label>
+        Wait
+        <button id="noWait" aria-pressed="false">Waitなし OFF</button>
+      </label>
+      <label>
+        強制
+        <button id="forceBig">強制BIG</button>
+      </label>
+      <label>
+        強制
+        <button id="forceReg">強制REG</button>
+      </label>
+      <label>
+        停止
+        <button id="stop" class="danger">停止</button>
+      </label>
+      <label>
+        初期化
+        <button id="reset">リセット</button>
+      </label>
+      <label>
+        ログ
+        <button id="clear">ログクリア</button>
+      </label>
+    </section>
+
+    <section class="machine-stage" aria-label="筐体表示">
+      <div class="machine-stage__inner">
+        <section class="cabinet-machine" id="machineCabinet" aria-label="whitebase筐体">
+          <div class="cabinet-machine__lcd" id="cabinetLcd">LIVE START</div>
+          <div class="cabinet-machine__notice" id="cabinetNotice">BIG BONUS</div>
+          <div class="cabinet-machine__reel" id="reelWindow"></div>
+          <div class="cabinet-machine__meter" aria-label="クレジットと払出">
+            <span id="cabinetCredit">0000</span>
+            <span id="cabinetPayout">000</span>
+          </div>
+          <button type="button" class="cabinet-machine__control cabinet-machine__control--maxbet" id="cabinetMaxBet">MAX<br>BET</button>
+          <button type="button" class="cabinet-machine__control cabinet-machine__control--start" id="cabinetStart">START</button>
+          <button type="button" class="cabinet-machine__button cabinet-machine__button--left" id="cabinetStopLeft">LEFT</button>
+          <button type="button" class="cabinet-machine__button cabinet-machine__button--center" id="cabinetStopCenter">CENTER</button>
+          <button type="button" class="cabinet-machine__button cabinet-machine__button--right" id="cabinetStopRight">RIGHT</button>
+        </section>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <aside class="state">
+        <h2>内部状態</h2>
+        <div class="kv" id="statePanel"></div>
+      </aside>
+      <aside class="terminal-panel">
+        <h2>データ表示端末</h2>
+        <div class="data-terminal" id="dataTerminal" aria-live="polite"></div>
+        <canvas class="slump-canvas" id="slumpGraph" aria-label="スランプグラフ"></canvas>
+      </aside>
+      <section class="log-wrap">
+        <div class="log-head">メイン基板ログ</div>
+        <pre id="log" aria-live="polite"></pre>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    if (window.location.protocol === "file:") {
+      window.__nikeSlotFileProtocol = true;
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("button, input, select").forEach(control => {
+          control.disabled = true;
+        });
+      });
+    }
+  </script>
+  <script type="text/plain" id="legacy-prototype-source">
+    const REELS = {
+      left: [
+        "CHERRY", "MASTER_NIKECHAN", "BELL", "SUIKA", "REPLAY", "SUIKA",
+        "AI_NIKECHAN", "REPLAY", "SUIKA", "BELL", "LOGO_BAR", "CHERRY",
+        "LOGO_BAR", "BELL", "REPLAY", "SUIKA", "MASTER_NIKECHAN",
+        "MASTER_NIKECHAN", "MASTER_NIKECHAN", "REPLAY", "BELL"
+      ],
+      center: [
+        "BELL", "CHERRY", "SUIKA", "AI_NIKECHAN", "REPLAY", "BELL",
+        "LOGO_BAR", "CHERRY", "REPLAY", "BELL", "CHERRY", "BELL",
+        "REPLAY", "CHERRY", "SUIKA", "CHERRY", "BELL", "REPLAY",
+        "MASTER_NIKECHAN", "CHERRY", "REPLAY"
+      ],
+      right: [
+        "REPLAY", "CHERRY", "AI_NIKECHAN", "BELL", "SUIKA", "REPLAY",
+        "CHERRY", "BELL", "CHERRY", "REPLAY", "LOGO_BAR", "BELL",
+        "CHERRY", "REPLAY", "CHERRY", "BELL", "SUIKA", "REPLAY",
+        "MASTER_NIKECHAN", "BELL", "SUIKA"
+      ]
+    };
+
+    const REEL_KEYS = ["left", "center", "right"];
+    const ACTIVE_LINES = [
+      { id: "top", label: "上段", rows: [0, 0, 0] },
+      { id: "center", label: "中段", rows: [1, 1, 1] },
+      { id: "bottom", label: "下段", rows: [2, 2, 2] },
+      { id: "downDiagonal", label: "右下がり", rows: [0, 1, 2] },
+      { id: "upDiagonal", label: "右上がり", rows: [2, 1, 0] }
+    ];
+    const MAX_SLIP = 5;
+    const MAX_BET = 3;
+    const INITIAL_CREDIT = 10000;
+    const BONUS_PATTERNS = {
+      BIG: [
+        ["AI_NIKECHAN", "MASTER_NIKECHAN"],
+        ["AI_NIKECHAN", "MASTER_NIKECHAN"],
+        ["AI_NIKECHAN", "MASTER_NIKECHAN"]
+      ],
+      REG: ["LOGO_BAR", "LOGO_BAR", "LOGO_BAR"]
+    };
+    const ROLE_PATTERNS = {
+      REPLAY: ["REPLAY", "REPLAY", "REPLAY"],
+      BELL: ["BELL", "BELL", "BELL"],
+      RARE_CHERRY: ["CHERRY", "ANY", "ANY"],
+      SUIKA: ["SUIKA", "SUIKA", "SUIKA"]
+    };
+    const PAYOUTS = {
+      REPLAY: 0,
+      BELL: 5,
+      RARE_CHERRY: 2,
+      SUIKA: 15
+    };
+    const TABLES = {
+      setting1: { BIG: 211, REG: 112, BELL: 12025, RARE_CHERRY: 1841, SUIKA: 64, REPLAY: 16640, BIG_RARE_CHERRY: 46, REG_RARE_CHERRY: 45 },
+      setting2: { BIG: 213, REG: 118, BELL: 12092, RARE_CHERRY: 1841, SUIKA: 64, REPLAY: 16529, BIG_RARE_CHERRY: 48, REG_RARE_CHERRY: 49 },
+      setting3: { BIG: 218, REG: 133, BELL: 12181, RARE_CHERRY: 1841, SUIKA: 64, REPLAY: 16380, BIG_RARE_CHERRY: 48, REG_RARE_CHERRY: 51 },
+      setting4: { BIG: 225, REG: 149, BELL: 12273, RARE_CHERRY: 1841, SUIKA: 64, REPLAY: 16227, BIG_RARE_CHERRY: 48, REG_RARE_CHERRY: 57 },
+      setting5: { BIG: 229, REG: 172, BELL: 12412, RARE_CHERRY: 1841, SUIKA: 64, REPLAY: 15995, BIG_RARE_CHERRY: 51, REG_RARE_CHERRY: 57 },
+      setting6: { BIG: 248, REG: 191, BELL: 12603, RARE_CHERRY: 1841, SUIKA: 64, REPLAY: 15677, BIG_RARE_CHERRY: 52, REG_RARE_CHERRY: 64 }
+    };
+    const DENOMINATOR = 65536;
+
+    const els = {
+      setting: document.getElementById("setting"),
+      seed: document.getElementById("seed"),
+      pushStrategy: document.getElementById("pushStrategy"),
+      maxGames: document.getElementById("maxGames"),
+      step: document.getElementById("step"),
+      runUntilBonus: document.getElementById("runUntilBonus"),
+      forceBig: document.getElementById("forceBig"),
+      forceReg: document.getElementById("forceReg"),
+      stop: document.getElementById("stop"),
+      reset: document.getElementById("reset"),
+      clear: document.getElementById("clear"),
+      log: document.getElementById("log"),
+      statePanel: document.getElementById("statePanel")
+    };
+
+    let state;
+    let logs = [];
+    let stopRequested = false;
+    let forcedBonusNext = null;
+
+    function parseSeed(value) {
+      const raw = String(value || "").trim();
+      if (raw.startsWith("0x") || raw.startsWith("0X")) {
+        return Number.parseInt(raw.slice(2), 16) >>> 0;
+      }
+      const parsed = Number.parseInt(raw, 10);
+      return Number.isFinite(parsed) ? parsed >>> 0 : 0x12345678;
+    }
+
+    function seedText(seed) {
+      return "0x" + (seed >>> 0).toString(16).toUpperCase().padStart(8, "0");
+    }
+
+    function rng() {
+      let x = state.seed >>> 0;
+      x ^= x << 13;
+      x ^= x >>> 17;
+      x ^= x << 5;
+      state.seed = x >>> 0;
+      return state.seed / 0x100000000;
+    }
+
+    function randomInt(max) {
+      return Math.floor(rng() * max);
+    }
+
+    function resetGame() {
+      state = {
+        gameNo: 0,
+        displayGameCount: 0,
+        credit: INITIAL_CREDIT,
+        stateId: "normal",
+        bonusType: null,
+        carriedBonus: null,
+        currentBet: 0,
+        seed: parseSeed(els.seed.value),
+        settingId: els.setting.value,
+        reelPositions: { left: 0, center: 0, right: 0 },
+        totalBet: 0,
+        totalPayout: 0,
+        bigCount: 0,
+        regCount: 0
+      };
+      stopRequested = false;
+      forcedBonusNext = null;
+      addLog("SYSTEM reset setting=" + state.settingId + " seed=" + seedText(state.seed));
+      render();
+    }
+
+    function addLog(line) {
+      logs.push(line);
+      if (logs.length > 3000) logs = logs.slice(-3000);
+      els.log.textContent = logs.join("\n");
+      els.log.scrollTop = els.log.scrollHeight;
+    }
+
+    function gamePrefix() {
+      return "[" + String(state.gameNo).padStart(6, "0") + "]";
+    }
+
+    function render() {
+      const delta = state.totalPayout - state.totalBet;
+      els.statePanel.innerHTML = [
+        ["state", state.stateId],
+        ["bonusType", state.bonusType || "-"],
+        ["carriedBonus", state.carriedBonus || "-"],
+        ["forcedNext", forcedBonusNext || "-"],
+        ["setting", state.settingId.replace("setting", "設定")],
+        ["seed", seedText(state.seed)],
+        ["gameNo", state.gameNo],
+        ["displayGames", state.displayGameCount],
+        ["credit", state.credit],
+        ["currentBet", state.currentBet],
+        ["BIG", state.bigCount],
+        ["REG", state.regCount],
+        ["delta", (delta >= 0 ? "+" : "") + delta]
+      ].map(([key, value]) => `<span>${key}</span><span class="${key === "state" ? "status" : ""}">${value}</span>`).join("");
+    }
+
+    function buildEntries(table, bonusFlagged) {
+      if (bonusFlagged) {
+        return [
+          { bonus: null, smallRole: "BELL", replay: false, weight: table.BELL },
+          { bonus: null, smallRole: "RARE_CHERRY", replay: false, weight: table.RARE_CHERRY + table.BIG_RARE_CHERRY + table.REG_RARE_CHERRY },
+          { bonus: null, smallRole: "SUIKA", replay: false, weight: table.SUIKA },
+          { bonus: null, smallRole: null, replay: true, weight: table.REPLAY }
+        ];
+      }
+      return [
+        { bonus: "BIG", smallRole: null, replay: false, weight: table.BIG },
+        { bonus: "REG", smallRole: null, replay: false, weight: table.REG },
+        { bonus: null, smallRole: "BELL", replay: false, weight: table.BELL },
+        { bonus: null, smallRole: "RARE_CHERRY", replay: false, weight: table.RARE_CHERRY },
+        { bonus: null, smallRole: "SUIKA", replay: false, weight: table.SUIKA },
+        { bonus: null, smallRole: null, replay: true, weight: table.REPLAY },
+        { bonus: "BIG", smallRole: "RARE_CHERRY", replay: false, weight: table.BIG_RARE_CHERRY },
+        { bonus: "REG", smallRole: "RARE_CHERRY", replay: false, weight: table.REG_RARE_CHERRY }
+      ];
+    }
+
+    function resolveLottery() {
+      const table = TABLES[state.settingId];
+      const bonusFlagged = Boolean(state.carriedBonus);
+      if (forcedBonusNext && !bonusFlagged) {
+        const forcedBonus = forcedBonusNext;
+        forcedBonusNext = null;
+        return {
+          bonus: forcedBonus,
+          smallRole: null,
+          replay: false,
+          tableId: `forced-${state.settingId}`,
+          forced: true
+        };
+      }
+      const entries = buildEntries(table, bonusFlagged);
+      const totalWeight = entries.reduce((sum, entry) => sum + entry.weight, 0);
+      const denominator = bonusFlagged ? totalWeight : DENOMINATOR;
+      let pick = Math.floor(rng() * denominator);
+      for (const entry of entries) {
+        if (pick < entry.weight) {
+          return { ...entry, forced: false, tableId: bonusFlagged ? `bonus-flagged-${state.settingId}` : `normal-${state.settingId}` };
+        }
+        pick -= entry.weight;
+      }
+      return { bonus: null, smallRole: null, replay: false, forced: false, tableId: bonusFlagged ? `bonus-flagged-${state.settingId}` : `normal-${state.settingId}` };
+    }
+
+    function candidateIndexes(push) {
+      return Array.from({ length: MAX_SLIP + 1 }, (_, slip) => ({
+        index: (push + slip) % 21,
+        slip
+      }));
+    }
+
+    function matchedLineRole(symbols) {
+      if (lineMatches(symbols, BONUS_PATTERNS.BIG)) return "BIG";
+      if (lineMatches(symbols, BONUS_PATTERNS.REG)) return "REG";
+      if (lineMatches(symbols, ROLE_PATTERNS.REPLAY)) return "REPLAY";
+      if (lineMatches(symbols, ROLE_PATTERNS.BELL)) return "BELL";
+      if (lineMatches(symbols, ROLE_PATTERNS.SUIKA)) return "SUIKA";
+      if (lineMatches(symbols, ROLE_PATTERNS.RARE_CHERRY)) return "RARE_CHERRY";
+      return null;
+    }
+
+    function isAllowedRole(matchedRole, activeBonus, lottery) {
+      if (!matchedRole) return true;
+      if (matchedRole === activeBonus) return true;
+      if (matchedRole === "REPLAY") return Boolean(lottery.replay);
+      return matchedRole === lottery.smallRole;
+    }
+
+    function lineSymbolsForStops(candidates, line) {
+      return REEL_KEYS.map((key, reelIndex) => {
+        const reel = REELS[key];
+        const centerIndex = candidates[key].index;
+        const row = line.rows[reelIndex];
+        return reel[(centerIndex + row - 1 + 21) % 21];
+      });
+    }
+
+    function evaluateLines(candidates, activeBonus, lottery) {
+      const matches = [];
+      for (const line of ACTIVE_LINES) {
+        const symbols = lineSymbolsForStops(candidates, line);
+        const role = matchedLineRole(symbols);
+        matches.push({ line, symbols, role });
+      }
+      const invalid = matches.filter(match => match.role && !isAllowedRole(match.role, activeBonus, lottery));
+      const allowed = matches.filter(match => match.role && isAllowedRole(match.role, activeBonus, lottery));
+      const best = allowed.sort((a, b) => roleScore(b.role, activeBonus, lottery) - roleScore(a.role, activeBonus, lottery))[0] || null;
+      return { matches, invalid, allowed, best };
+    }
+
+    function roleScore(role, activeBonus, lottery) {
+      if (activeBonus && role === activeBonus) return 80;
+      if (lottery.replay && role === "REPLAY") return 70;
+      if (lottery.smallRole === "BELL" && role === "BELL") return 60;
+      if (lottery.smallRole === "SUIKA" && role === "SUIKA") return 50;
+      if (lottery.smallRole === "RARE_CHERRY" && role === "RARE_CHERRY") return 50;
+      return 0;
+    }
+
+    function comboScore(evaluation, activeBonus, lottery) {
+      if (evaluation.invalid.length > 0) return -1;
+      if (evaluation.best) return roleScore(evaluation.best.role, activeBonus, lottery);
+      if (lottery.smallRole === "RARE_CHERRY" || lottery.smallRole === "SUIKA") return 40;
+      if (activeBonus) return 30;
+      return 10;
+    }
+
+    function stopReasonFor(reelIndex, symbol, lineRole, activeBonus, lottery) {
+      if (activeBonus && lineRole === activeBonus) return "bonus";
+      if (lineRole === "REPLAY") return "replay";
+      if (lineRole === "BELL") return "smallRole";
+      if (lineRole === "SUIKA") return "suika";
+      if (lineRole === "RARE_CHERRY") return reelIndex === 0 ? "rare" : "any";
+      if (lottery.smallRole === "SUIKA") return "suikaMiss";
+      if (lottery.smallRole === "RARE_CHERRY") return "rareMiss";
+      return activeBonus ? "reachPattern" : "blank";
+    }
+
+    function chooseStops(pushes, activeBonus, lottery) {
+      const candidateGroups = REEL_KEYS.map(key => candidateIndexes(pushes[key]));
+      let best = null;
+
+      for (const left of candidateGroups[0]) {
+        for (const center of candidateGroups[1]) {
+          for (const right of candidateGroups[2]) {
+            const candidates = { left, center, right };
+            const evaluation = evaluateLines(candidates, activeBonus, lottery);
+            const score = comboScore(evaluation, activeBonus, lottery);
+            if (score < 0) continue;
+            const totalSlip = REEL_KEYS.reduce((sum, key) => sum + candidates[key].slip, 0);
+            if (!best || score > best.score || (score === best.score && totalSlip < best.totalSlip)) {
+              best = { candidates, evaluation, score, totalSlip };
+            }
+          }
+        }
+      }
+
+      const selected = best || {
+        candidates: {
+          left: candidateGroups[0][0],
+          center: candidateGroups[1][0],
+          right: candidateGroups[2][0]
+        },
+        evaluation: null,
+        score: 0,
+        totalSlip: 0
+      };
+      if (!selected.evaluation) selected.evaluation = evaluateLines(selected.candidates, activeBonus, lottery);
+      const lineRole = selected.evaluation.best?.role || null;
+
+      return REEL_KEYS.reduce((stops, key, reelIndex) => {
+        const candidate = selected.candidates[key];
+        stops[key] = {
+          ...candidate,
+          reason: stopReasonFor(reelIndex, null, lineRole, activeBonus, lottery),
+          target: selected.evaluation.best?.symbols?.[reelIndex] || REELS[key][candidate.index],
+          lineId: selected.evaluation.best?.line?.id || null,
+          lineSymbols: selected.evaluation.best?.symbols || null
+        };
+        return stops;
+      }, {});
+    }
+
+    function visibleSymbols(reelKey, centerIndex) {
+      const reel = REELS[reelKey];
+      return [
+        reel[(centerIndex + 20) % 21],
+        reel[centerIndex],
+        reel[(centerIndex + 1) % 21]
+      ];
+    }
+
+    function pushPosition(reelKey, reelIndex, strategy, activeBonus, lottery) {
+      const reel = REELS[reelKey];
+      if (strategy === "bonusAim" && activeBonus) {
+        const target = BONUS_PATTERNS[activeBonus][reelIndex];
+        const index = targetIndexForPattern(reel, target);
+        return index >= 0 ? index : state.reelPositions[reelKey];
+      }
+      if (strategy === "rareAim" && (lottery.smallRole === "RARE_CHERRY" || lottery.smallRole === "SUIKA")) {
+        const target = ROLE_PATTERNS[lottery.smallRole][reelIndex];
+        if (target !== "ANY") {
+          const index = reel.indexOf(target);
+          return index >= 0 ? index : state.reelPositions[reelKey];
+        }
+      }
+      if (strategy === "pseudoRandom") return randomInt(21);
+      return state.reelPositions[reelKey];
+    }
+
+    function lineMatches(symbols, pattern) {
+      return pattern.every((symbol, index) => {
+        if (symbol === "ANY") return true;
+        if (Array.isArray(symbol)) return symbol.includes(symbols[index]);
+        return symbols[index] === symbol;
+      });
+    }
+
+    function targetIndexForPattern(reel, target) {
+      if (!target || target === "ANY") return -1;
+      if (!Array.isArray(target)) return reel.indexOf(target);
+      const indexes = target.map(symbol => reel.indexOf(symbol)).filter(index => index >= 0);
+      return indexes.length ? Math.min(...indexes) : -1;
+    }
+
+    function evaluateWin(stops, activeBonus, lottery, stopReasons) {
+      const candidates = Object.fromEntries(REEL_KEYS.map(key => [key, { index: stops[key].index }]));
+      const evaluation = evaluateLines(candidates, activeBonus, lottery);
+      const best = evaluation.best;
+      if (best?.role === activeBonus) {
+        return { role: activeBonus, payout: 0, tag: "bonusEntered", bonusEntered: true, lineId: best.line.id, symbols: best.symbols };
+      }
+      if (best?.role === "REPLAY") {
+        return { role: "REPLAY", payout: 0, tag: "replay", bonusEntered: false, lineId: best.line.id, symbols: best.symbols };
+      }
+      if (best?.role === "BELL") {
+        return { role: "BELL", payout: PAYOUTS.BELL, tag: "win", bonusEntered: false, lineId: best.line.id, symbols: best.symbols };
+      }
+      if (best?.role === "SUIKA") {
+        return { role: "SUIKA", payout: PAYOUTS.SUIKA, tag: "win", bonusEntered: false, lineId: best.line.id, symbols: best.symbols };
+      }
+      if (best?.role === "RARE_CHERRY") {
+        return { role: "RARE_CHERRY", payout: PAYOUTS.RARE_CHERRY, tag: "win", bonusEntered: false, lineId: best.line.id, symbols: best.symbols };
+      }
+      if (stopReasons.includes("suikaMiss")) {
+        return { role: null, payout: 0, tag: "suikaMiss", bonusEntered: false };
+      }
+      if (stopReasons.includes("rareMiss")) {
+        return { role: null, payout: 0, tag: "rareMiss", bonusEntered: false };
+      }
+      if (activeBonus) {
+        return { role: null, payout: 0, tag: "reachPattern", bonusEntered: false };
+      }
+      return { role: null, payout: 0, tag: "miss", bonusEntered: false };
+    }
+
+    function runOneGame() {
+      state.settingId = els.setting.value;
+      if (state.stateId === "bonusEnding") {
+        addLog(`${gamePrefix()} STATE bonusEnding -> normal`);
+        state.stateId = "normal";
+        state.bonusType = null;
+        render();
+        return { bonusFlagRaised: false };
+      }
+
+      if (state.credit < MAX_BET) {
+        addLog(`${gamePrefix()} ERROR creditShortage credit=${state.credit}`);
+        render();
+        return { error: true };
+      }
+
+      state.gameNo += 1;
+      if (state.stateId !== "bonusActive") state.displayGameCount += 1;
+
+      state.currentBet = MAX_BET;
+      state.credit -= MAX_BET;
+      state.totalBet += MAX_BET;
+      addLog(`${gamePrefix()} state=${state.stateId} setting=${state.settingId.replace("setting", "")} credit=${state.credit} seed=${seedText(state.seed)}`);
+      addLog(`${gamePrefix()} BET max=${MAX_BET} credit=${state.credit}`);
+
+      const lottery = resolveLottery();
+      const activeBonus = state.carriedBonus || lottery.bonus;
+      let bonusFlagRaised = false;
+      addLog(`${gamePrefix()} LOTTERY bonus=${lottery.bonus || "null"} smallRole=${lottery.smallRole || "null"} replay=${lottery.replay} table=${lottery.tableId} forced=${lottery.forced}`);
+
+      if (lottery.bonus && !state.carriedBonus) {
+        state.carriedBonus = lottery.bonus;
+        state.stateId = "bonusFlagged";
+        state.bonusType = lottery.bonus;
+        bonusFlagRaised = true;
+        addLog(`${gamePrefix()} BONUS_FLAG type=${lottery.bonus} announced=false`);
+      }
+
+      const strategy = els.pushStrategy.value;
+      addLog(`${gamePrefix()} START strategy=${strategy} reelPositions L=${state.reelPositions.left} C=${state.reelPositions.center} R=${state.reelPositions.right}`);
+
+      const pushes = {};
+      REEL_KEYS.forEach((key, reelIndex) => {
+        pushes[key] = pushPosition(key, reelIndex, strategy, activeBonus, lottery);
+      });
+      const stops = chooseStops(pushes, activeBonus, lottery);
+      const stopReasons = [];
+      REEL_KEYS.forEach((key, reelIndex) => {
+        const stop = stops[key];
+        state.reelPositions[key] = stop.index;
+        stopReasons.push(stop.reason);
+        addLog(`${gamePrefix()} STOP ${key.toUpperCase()} push=${pushes[key]} stop=${stop.index} slip=${stop.slip} reason=${stop.reason} visible=[${visibleSymbols(key, stop.index).join(",")}]`);
+      });
+
+      const win = evaluateWin(stops, activeBonus, lottery, stopReasons);
+      addLog(`${gamePrefix()} STOP_RESULT line=${win.lineId || "-"} symbols=[${(win.symbols || []).join(",")}] tag=${win.tag} bonusEntered=${win.bonusEntered}`);
+
+      if (win.bonusEntered) {
+        if (activeBonus === "BIG") state.bigCount += 1;
+        if (activeBonus === "REG") state.regCount += 1;
+        addLog(`${gamePrefix()} BONUS_SYMBOL_ENTERED type=${activeBonus}`);
+        addLog(`${gamePrefix()} STATE ${state.stateId} -> bonusSymbolEntered bonusType=${activeBonus}`);
+        state.stateId = "bonusSymbolEntered";
+        state.bonusType = activeBonus;
+        state.carriedBonus = null;
+        addLog(`${gamePrefix()} STATE bonusSymbolEntered -> bonusActive bonusType=${activeBonus}`);
+        state.stateId = "bonusActive";
+      } else if (win.payout > 0) {
+        state.credit += win.payout;
+        state.totalPayout += win.payout;
+        addLog(`${gamePrefix()} WIN role=${win.role} line=${win.lineId || "-"} payout=${win.payout}`);
+        addLog(`${gamePrefix()} PAYOUT credit=${state.credit} delta=${win.payout - MAX_BET >= 0 ? "+" : ""}${win.payout - MAX_BET}`);
+      } else if (win.role === "REPLAY") {
+        state.credit += MAX_BET;
+        state.totalPayout += MAX_BET;
+        addLog(`${gamePrefix()} WIN role=REPLAY line=${win.lineId || "-"} replay=true`);
+        addLog(`${gamePrefix()} PAYOUT credit=${state.credit} replayReturn=${MAX_BET}`);
+      }
+
+      addLog(`${gamePrefix()} END state=${state.stateId} bonusType=${state.bonusType || "null"} carriedBonus=${state.carriedBonus || "null"}`);
+      render();
+      return { bonusFlagRaised };
+    }
+
+    async function runUntilBonus() {
+      stopRequested = false;
+      const maxGames = Math.max(1, Math.min(10000, Number.parseInt(els.maxGames.value, 10) || 10000));
+      addLog(`SYSTEM runUntilBonus start maxGames=${maxGames}`);
+      for (let i = 0; i < maxGames; i += 1) {
+        if (stopRequested) {
+          addLog(`SYSTEM simulationStopped reason=userStop gameNo=${state.gameNo}`);
+          break;
+        }
+        const result = runOneGame();
+        if (result.error) {
+          addLog(`SYSTEM simulationStopped reason=error gameNo=${state.gameNo}`);
+          break;
+        }
+        if (result.bonusFlagRaised) {
+          addLog(`SYSTEM simulationStopped reason=bonusFlagRaised gameNo=${state.gameNo} bonusType=${state.bonusType}`);
+          break;
+        }
+        if (i % 50 === 0) {
+          await new Promise(requestAnimationFrame);
+        }
+      }
+    }
+
+    function reserveForcedBonus(type) {
+      if (!state || state.stateId !== "normal" || state.carriedBonus) {
+        addLog(`SYSTEM forceBonusRejected type=${type} reason=bonusNotNormal`);
+        return;
+      }
+      forcedBonusNext = type;
+      addLog(`SYSTEM forceBonusReserved type=${type}`);
+      render();
+    }
+
+    els.step.addEventListener("click", runOneGame);
+    els.runUntilBonus.addEventListener("click", runUntilBonus);
+    els.forceBig.addEventListener("click", () => reserveForcedBonus("BIG"));
+    els.forceReg.addEventListener("click", () => reserveForcedBonus("REG"));
+    els.stop.addEventListener("click", () => { stopRequested = true; });
+    els.reset.addEventListener("click", resetGame);
+    els.clear.addEventListener("click", () => { logs = []; els.log.textContent = ""; });
+    els.setting.addEventListener("change", () => {
+      if (!state) return;
+      const oldSetting = state.settingId;
+      state.settingId = els.setting.value;
+      addLog(`SYSTEM settingChanged from=${oldSetting} to=${state.settingId}`);
+      render();
+    });
+    els.seed.addEventListener("change", () => {
+      if (!state) return;
+      state.seed = parseSeed(els.seed.value);
+      addLog(`SYSTEM seedChanged seed=${seedText(state.seed)}`);
+      render();
+    });
+
+    resetGame();
+  </script>
+  <script type="module" src="./src/ui/main.js"></script>
+</body>
+</html>

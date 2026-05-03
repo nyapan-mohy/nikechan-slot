@@ -17,7 +17,13 @@ HTML + Canvas ベースのスマートスロットエミュレーター開発プ
 最初のフェーズ計画はこちらです。
 
 - [docs/plan/phase-plan.md](docs/plan/phase-plan.md)
+- [docs/plan/public-emulator-priority-todo.md](docs/plan/public-emulator-priority-todo.md)
 - [docs/spec/initial-a-type-spec.md](docs/spec/initial-a-type-spec.md)
+- [docs/spec/main-board-log-simulator-spec.md](docs/spec/main-board-log-simulator-spec.md)
+- [docs/spec/emulator-demo-control-adapters.md](docs/spec/emulator-demo-control-adapters.md)
+- [docs/spec/bonus-and-reel-control-spec.md](docs/spec/bonus-and-reel-control-spec.md)
+- [docs/spec/settings-and-lottery-tables-spec.md](docs/spec/settings-and-lottery-tables-spec.md)
+- [docs/spec/data-display-terminal-spec.md](docs/spec/data-display-terminal-spec.md)
 - [docs/design/cabinet-direction.md](docs/design/cabinet-direction.md)
 - [docs/regulatory/source-register.md](docs/regulatory/source-register.md)
 - [docs/regulatory/compliance-checklist.md](docs/regulatory/compliance-checklist.md)

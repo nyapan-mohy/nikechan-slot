@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "scripts": {
+    "test": "node tools/verify-tables.mjs && node tests/core-smoke.mjs",
+    "verify:tables": "node tools/verify-tables.mjs",
+    "simulate:settings": "node tools/simulate-settings.mjs"
+  }
+}

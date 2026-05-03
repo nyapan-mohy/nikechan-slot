@@ -1,0 +1,364 @@
+{
+  "source": "/Users/mohy-nyapan/codex/nikeslot/idea/output/whitebase-replay-small-top-logo-base.png",
+  "canvas": {
+    "width": 941,
+    "height": 1671
+  },
+  "coordinateSystem": "top-left origin, pixels, x/y/w/h",
+  "notes": [
+    "Initial visual parse for cutout planning. Coordinates include a small amount of padding and should be refined after alpha extraction.",
+    "Prefer cropped transparent PNGs plus absolute placement metadata for runtime.",
+    "Use the all-off render as base-off; cut lit parts from the all-on and state renders."
+  ],
+  "layers": [
+    {
+      "id": "base-off",
+      "group": "base",
+      "sourceState": "all-off",
+      "box": { "x": 0, "y": 0, "w": 941, "h": 1671 },
+      "runtime": "always"
+    },
+    {
+      "id": "top-marquee-on",
+      "group": "marquee",
+      "sourceState": "base-on",
+      "box": { "x": 250, "y": 22, "w": 440, "h": 132 },
+      "runtime": "on except all-off"
+    },
+    {
+      "id": "speaker-left-ring-on",
+      "group": "decor",
+      "sourceState": "base-on",
+      "box": { "x": 52, "y": 34, "w": 136, "h": 132 },
+      "runtime": "on except all-off"
+    },
+    {
+      "id": "speaker-right-ring-on",
+      "group": "decor",
+      "sourceState": "base-on",
+      "box": { "x": 754, "y": 34, "w": 136, "h": 132 },
+      "runtime": "on except all-off"
+    },
+    {
+      "id": "side-neon-left-on",
+      "group": "decor",
+      "sourceState": "base-on",
+      "box": { "x": 19, "y": 123, "w": 83, "h": 842 },
+      "runtime": "on except all-off"
+    },
+    {
+      "id": "side-neon-right-on",
+      "group": "decor",
+      "sourceState": "base-on",
+      "box": { "x": 840, "y": 123, "w": 83, "h": 842 },
+      "runtime": "on except all-off"
+    },
+    {
+      "id": "lcd-upper-on",
+      "group": "lcd",
+      "sourceState": "base-on",
+      "box": { "x": 105, "y": 151, "w": 728, "h": 333 },
+      "runtime": "on except all-off and lcd-off"
+    },
+    {
+      "id": "bonus-big-on",
+      "group": "bonus",
+      "sourceState": "base-on",
+      "box": { "x": 109, "y": 489, "w": 725, "h": 101 },
+      "runtime": "normal big-lit state"
+    },
+    {
+      "id": "bonus-big-off",
+      "group": "bonus",
+      "sourceState": "big-bonus-off",
+      "box": { "x": 109, "y": 489, "w": 725, "h": 101 },
+      "runtime": "optional overlay if base-off bonus panel differs"
+    },
+    {
+      "id": "bonus-reg-on",
+      "group": "bonus",
+      "sourceState": "reg-bonus",
+      "box": { "x": 109, "y": 489, "w": 725, "h": 101 },
+      "runtime": "reg-lit state"
+    },
+    {
+      "id": "reel-window",
+      "group": "reels",
+      "sourceState": "base-on",
+      "box": { "x": 109, "y": 580, "w": 725, "h": 242 },
+      "runtime": "under dynamic reel strips or as static frame reference"
+    },
+    {
+      "id": "reel-left-mask",
+      "group": "reels",
+      "sourceState": "base-on",
+      "box": { "x": 164, "y": 592, "w": 184, "h": 226 },
+      "runtime": "dynamic reel clip"
+    },
+    {
+      "id": "reel-center-mask",
+      "group": "reels",
+      "sourceState": "base-on",
+      "box": { "x": 378, "y": 592, "w": 184, "h": 226 },
+      "runtime": "dynamic reel clip"
+    },
+    {
+      "id": "reel-right-mask",
+      "group": "reels",
+      "sourceState": "base-on",
+      "box": { "x": 590, "y": 592, "w": 184, "h": 226 },
+      "runtime": "dynamic reel clip"
+    },
+    {
+      "id": "lamp-1bet-on",
+      "group": "status-lamps",
+      "sourceState": "base-on",
+      "box": { "x": 114, "y": 834, "w": 59, "h": 25 },
+      "runtime": "current bet >= 1"
+    },
+    {
+      "id": "lamp-2bet-on",
+      "group": "status-lamps",
+      "sourceState": "base-on",
+      "box": { "x": 114, "y": 859, "w": 59, "h": 25 },
+      "runtime": "current bet >= 2"
+    },
+    {
+      "id": "lamp-3bet-on",
+      "group": "status-lamps",
+      "sourceState": "base-on",
+      "box": { "x": 114, "y": 884, "w": 59, "h": 25 },
+      "runtime": "current bet >= 3"
+    },
+    {
+      "id": "lamp-wait-on",
+      "group": "status-lamps",
+      "sourceState": "base-on",
+      "box": { "x": 205, "y": 839, "w": 83, "h": 32 },
+      "runtime": "wait state"
+    },
+    {
+      "id": "lamp-replay-on",
+      "group": "status-lamps",
+      "sourceState": "base-on",
+      "box": { "x": 205, "y": 871, "w": 83, "h": 32 },
+      "runtime": "last result replay or replay-armed state"
+    },
+    {
+      "id": "meter-credit-on",
+      "group": "meters",
+      "sourceState": "base-on",
+      "box": { "x": 337, "y": 832, "w": 122, "h": 69 },
+      "runtime": "dynamic digits overlay or static glow backing"
+    },
+    {
+      "id": "meter-payout-on",
+      "group": "meters",
+      "sourceState": "base-on",
+      "box": { "x": 529, "y": 832, "w": 119, "h": 69 },
+      "runtime": "dynamic digits overlay or static glow backing"
+    },
+    {
+      "id": "button-maxbet-on",
+      "group": "buttons",
+      "sourceState": "base-on",
+      "box": { "x": 108, "y": 923, "w": 111, "h": 76 },
+      "runtime": "enabled and lit"
+    },
+    {
+      "id": "button-1bet-on",
+      "group": "buttons",
+      "sourceState": "base-on",
+      "box": { "x": 254, "y": 931, "w": 89, "h": 67 },
+      "runtime": "enabled and lit"
+    },
+    {
+      "id": "button-start-on",
+      "group": "buttons",
+      "sourceState": "base-on",
+      "box": { "x": 423, "y": 931, "w": 119, "h": 62 },
+      "runtime": "ready to start"
+    },
+    {
+      "id": "button-payout-on",
+      "group": "buttons",
+      "sourceState": "base-on",
+      "box": { "x": 756, "y": 842, "w": 80, "h": 58 },
+      "runtime": "payout enabled"
+    },
+    {
+      "id": "button-stop-left-on",
+      "group": "buttons",
+      "sourceState": "base-on",
+      "box": { "x": 347, "y": 1039, "w": 94, "h": 89 },
+      "runtime": "left reel spinning"
+    },
+    {
+      "id": "button-stop-center-on",
+      "group": "buttons",
+      "sourceState": "base-on",
+      "box": { "x": 474, "y": 1039, "w": 94, "h": 89 },
+      "runtime": "center reel spinning"
+    },
+    {
+      "id": "button-stop-right-on",
+      "group": "buttons",
+      "sourceState": "base-on",
+      "box": { "x": 600, "y": 1039, "w": 94, "h": 89 },
+      "runtime": "right reel spinning"
+    },
+    {
+      "id": "lcd-lower-on",
+      "group": "lcd",
+      "sourceState": "base-on",
+      "box": { "x": 80, "y": 1157, "w": 779, "h": 365 },
+      "runtime": "on except all-off and lcd-off"
+    },
+    {
+      "id": "bottom-neon-left-on",
+      "group": "decor",
+      "sourceState": "base-on",
+      "box": { "x": 54, "y": 1517, "w": 174, "h": 87 },
+      "runtime": "on except all-off"
+    },
+    {
+      "id": "bottom-neon-right-on",
+      "group": "decor",
+      "sourceState": "base-on",
+      "box": { "x": 713, "y": 1517, "w": 174, "h": 87 },
+      "runtime": "on except all-off"
+    }
+  ],
+  "states": {
+    "normal": [
+      "base-off",
+      "side-neon-left-on",
+      "side-neon-right-on",
+      "speaker-left-ring-on",
+      "speaker-right-ring-on",
+      "top-marquee-on",
+      "lcd-upper-on",
+      "bonus-big-on",
+      "reel-window",
+      "lamp-1bet-on",
+      "lamp-2bet-on",
+      "lamp-3bet-on",
+      "lamp-wait-on",
+      "meter-credit-on",
+      "meter-payout-on",
+      "button-maxbet-on",
+      "button-1bet-on",
+      "button-start-on",
+      "button-payout-on",
+      "button-stop-left-on",
+      "button-stop-center-on",
+      "button-stop-right-on",
+      "lcd-lower-on",
+      "bottom-neon-left-on",
+      "bottom-neon-right-on"
+    ],
+    "all-off": ["base-off"],
+    "big-bonus-off": [
+      "base-off",
+      "side-neon-left-on",
+      "side-neon-right-on",
+      "speaker-left-ring-on",
+      "speaker-right-ring-on",
+      "top-marquee-on",
+      "lcd-upper-on",
+      "reel-window",
+      "lamp-1bet-on",
+      "lamp-2bet-on",
+      "lamp-3bet-on",
+      "lamp-wait-on",
+      "lamp-replay-on",
+      "meter-credit-on",
+      "meter-payout-on",
+      "button-maxbet-on",
+      "button-1bet-on",
+      "button-start-on",
+      "button-payout-on",
+      "button-stop-left-on",
+      "button-stop-center-on",
+      "button-stop-right-on",
+      "lcd-lower-on",
+      "bottom-neon-left-on",
+      "bottom-neon-right-on"
+    ],
+    "reg-bonus": [
+      "base-off",
+      "side-neon-left-on",
+      "side-neon-right-on",
+      "speaker-left-ring-on",
+      "speaker-right-ring-on",
+      "top-marquee-on",
+      "lcd-upper-on",
+      "bonus-reg-on",
+      "reel-window",
+      "lamp-1bet-on",
+      "lamp-2bet-on",
+      "lamp-3bet-on",
+      "lamp-wait-on",
+      "lamp-replay-on",
+      "meter-credit-on",
+      "meter-payout-on",
+      "button-maxbet-on",
+      "button-1bet-on",
+      "button-start-on",
+      "button-payout-on",
+      "button-stop-left-on",
+      "button-stop-center-on",
+      "button-stop-right-on",
+      "lcd-lower-on",
+      "bottom-neon-left-on",
+      "bottom-neon-right-on"
+    ],
+    "lcd-off": [
+      "base-off",
+      "side-neon-left-on",
+      "side-neon-right-on",
+      "speaker-left-ring-on",
+      "speaker-right-ring-on",
+      "top-marquee-on",
+      "bonus-big-on",
+      "reel-window",
+      "lamp-1bet-on",
+      "lamp-2bet-on",
+      "lamp-3bet-on",
+      "lamp-wait-on",
+      "lamp-replay-on",
+      "meter-credit-on",
+      "meter-payout-on",
+      "button-maxbet-on",
+      "button-1bet-on",
+      "button-start-on",
+      "button-payout-on",
+      "button-stop-left-on",
+      "button-stop-center-on",
+      "button-stop-right-on",
+      "bottom-neon-left-on",
+      "bottom-neon-right-on"
+    ],
+    "buttons-off": [
+      "base-off",
+      "side-neon-left-on",
+      "side-neon-right-on",
+      "speaker-left-ring-on",
+      "speaker-right-ring-on",
+      "top-marquee-on",
+      "lcd-upper-on",
+      "bonus-big-on",
+      "reel-window",
+      "lamp-1bet-on",
+      "lamp-2bet-on",
+      "lamp-3bet-on",
+      "lamp-wait-on",
+      "lamp-replay-on",
+      "meter-credit-on",
+      "meter-payout-on",
+      "lcd-lower-on",
+      "bottom-neon-left-on",
+      "bottom-neon-right-on"
+    ]
+  }
+}

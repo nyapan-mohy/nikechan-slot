@@ -1,0 +1,49 @@
+{
+  "bonusTypes": {
+    "BIG": {
+      "bonusType": "BIG",
+      "entryRoleId": "BIG",
+      "entryPattern": [
+        [
+          "AI_NIKECHAN",
+          "MASTER_NIKECHAN"
+        ],
+        [
+          "AI_NIKECHAN",
+          "MASTER_NIKECHAN"
+        ],
+        [
+          "AI_NIKECHAN",
+          "MASTER_NIKECHAN"
+        ]
+      ],
+      "bet": 2,
+      "payoutPerGame": 14,
+      "netPerGame": 12,
+      "gameCount": 21,
+      "endByGrossPayout": 294,
+      "endByNetPayout": 252,
+      "endingState": "bonusEnding"
+    },
+    "REG": {
+      "bonusType": "REG",
+      "entryRoleId": "REG",
+      "entryPattern": [
+        "LOGO_BAR",
+        "LOGO_BAR",
+        "LOGO_BAR"
+      ],
+      "bet": 2,
+      "payoutPerGame": 14,
+      "netPerGame": 12,
+      "gameCount": 8,
+      "endByGrossPayout": 112,
+      "endByNetPayout": 96,
+      "endingState": "bonusEnding"
+    }
+  },
+  "bonusActiveRole": {
+    "roleId": "BELL",
+    "payout": 14
+  }
+}

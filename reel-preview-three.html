@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nikechan Slot Three Reel Preview</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101214;
+      --panel: #181b1f;
+      --text: #e7e9ed;
+      --muted: #9aa3af;
+      --accent: #37d67a;
+      --warn: #f4c542;
+      --line: #303741;
+      --button: #2b323b;
+      --button-hover: #37414c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #15181c;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+
+    .sub {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(340px, 720px) minmax(260px, 340px);
+      gap: 18px;
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: 22px;
+      align-items: start;
+    }
+
+    .reel-panel,
+    .controls {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .reel-panel {
+      padding: 16px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .panel-head strong {
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 800;
+    }
+
+    .reel-window {
+      position: relative;
+      overflow: hidden;
+      height: min(58vw, 430px);
+      min-height: 320px;
+      border: 2px solid #3b4350;
+      border-radius: 8px;
+      background: #050607;
+      box-shadow: inset 0 0 0 1px #050607;
+    }
+
+    #threeCanvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .payline {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 50%;
+      width: min(72%, 390px);
+      transform: translateX(-50%);
+      height: 2px;
+      background: rgba(244, 197, 66, 0.82);
+      box-shadow: 0 0 10px rgba(244, 197, 66, 0.4);
+      pointer-events: none;
+    }
+
+    .shade {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      right: 0;
+      height: 42px;
+      pointer-events: none;
+    }
+
+    .shade--top {
+      top: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.78), transparent);
+    }
+
+    .shade--bottom {
+      bottom: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.78), transparent);
+    }
+
+    .controls {
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+    }
+
+    .play-actions {
+      display: grid;
+      gap: 8px;
+    }
+
+    .stop-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .pull-control {
+      display: grid;
+      gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .pull-control label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    button,
+    select {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--button);
+      color: var(--text);
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    select {
+      width: 100%;
+      padding: 0 10px;
+    }
+
+    button {
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--button-hover);
+    }
+
+    button.primary {
+      border-color: #2bbf6a;
+      background: #1f6b43;
+    }
+
+    button.primary:hover {
+      background: #267a4e;
+    }
+
+    button.stop-button {
+      min-height: 56px;
+      border-color: #545f6f;
+      font-size: 18px;
+    }
+
+    button.stop-button[aria-pressed="true"] {
+      border-color: #6d5522;
+      background: #2b2415;
+      color: var(--warn);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.48;
+    }
+
+    .readout {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .readout span:nth-child(even) {
+      color: var(--text);
+    }
+
+    @media (max-width: 900px) {
+      .workspace {
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Nikechan Slot Three Reel Preview</h1>
+      <div class="sub">Three.js 21コマ角度制御リール</div>
+    </header>
+
+    <section class="workspace">
+      <section class="reel-panel" aria-label="リールプレビュー">
+        <div class="panel-head">
+          <span>リール窓</span>
+          <strong>1周 / 1秒</strong>
+        </div>
+        <div class="reel-window">
+          <canvas id="threeCanvas"></canvas>
+          <div class="payline" aria-hidden="true"></div>
+          <div class="shade shade--top" aria-hidden="true"></div>
+          <div class="shade shade--bottom" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <aside class="controls" aria-label="リール操作">
+        <div class="panel-head">
+          <span>操作部</span>
+          <strong id="spinStatus">LOADING</strong>
+        </div>
+        <div class="play-actions">
+          <button type="button" id="start" class="primary" disabled>START</button>
+          <div class="stop-actions">
+            <button type="button" id="stopLeft" class="stop-button" data-stop="left" disabled>1</button>
+            <button type="button" id="stopCenter" class="stop-button" data-stop="center" disabled>2</button>
+            <button type="button" id="stopRight" class="stop-button" data-stop="right" disabled>3</button>
+          </div>
+        </div>
+        <div class="pull-control">
+          <label>
+            引き込み
+            <select id="pullMode">
+              <option value="0">ビタ停止</option>
+              <option value="1">1コマ引き込み</option>
+              <option value="2">2コマ引き込み</option>
+              <option value="3" selected>3コマ引き込み</option>
+              <option value="4">4コマ引き込み</option>
+              <option value="random">ランダム 0-4</option>
+            </select>
+          </label>
+        </div>
+        <div class="readout" id="readout"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script type="module">
+    import * as THREE from "https://unpkg.com/three@0.164.1/build/three.module.js";
+
+    const TAU = Math.PI * 2;
+    const REEL_KEYS = ["left", "center", "right"];
+    const REEL_LENGTH = 21;
+    const STEP = TAU / REEL_LENGTH;
+    const SPIN_SPEED = TAU;
+    const SYMBOL_ASSET_ALIASES = {
+      RED7: "AI_NIKECHAN",
+      BAR: "LOGO_BAR",
+      SUIKA: "WATERMELON"
+    };
+
+    const canvas = document.getElementById("threeCanvas");
+    const startButton = document.getElementById("start");
+    const pullMode = document.getElementById("pullMode");
+    const readout = document.getElementById("readout");
+    const spinStatus = document.getElementById("spinStatus");
+    const stopButtons = {
+      left: document.getElementById("stopLeft"),
+      center: document.getElementById("stopCenter"),
+      right: document.getElementById("stopRight")
+    };
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    renderer.setClearColor(0x050607, 1);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-4.2, 4.2, 1.02, -1.02, 0.1, 100);
+    camera.position.set(0, 0, 8);
+    camera.lookAt(0, 0, 0);
+
+    const ambient = new THREE.AmbientLight(0xffffff, 1.8);
+    scene.add(ambient);
+    const light = new THREE.DirectionalLight(0xffffff, 1.1);
+    light.position.set(0, 2, 5);
+    scene.add(light);
+
+    const reelState = Object.fromEntries(REEL_KEYS.map(key => [key, {
+      group: new THREE.Group(),
+      panels: [],
+      rotation: 0,
+      spinning: false,
+      stopping: null,
+      push: 0,
+      stop: 0,
+      slip: 0
+    }]));
+
+    let reelData = null;
+    let assetMap = null;
+    let lastFrameAt = performance.now();
+    let ready = false;
+
+    init();
+
+    async function init() {
+      [reelData, assetMap] = await Promise.all([
+        fetchJson("./src/data/reels.json"),
+        fetchJson("./assets/images/symbols/symbols.json")
+      ]);
+      await buildReels();
+      bindEvents();
+      resize();
+      ready = true;
+      startButton.disabled = false;
+      spinStatus.textContent = "READY";
+      renderReadout();
+      requestAnimationFrame(animate);
+    }
+
+    async function buildReels() {
+      const loader = new THREE.TextureLoader();
+      const textureCache = new Map();
+      const panelGeometry = new THREE.PlaneGeometry(0.92, 0.66);
+      const backingMaterial = new THREE.MeshBasicMaterial({ color: 0xf4f1e8, side: THREE.DoubleSide });
+      const radius = 1.92;
+      const xPositions = [-1.02, 0, 1.02];
+
+      for (const [reelIndex, key] of REEL_KEYS.entries()) {
+        const group = reelState[key].group;
+        group.position.x = xPositions[reelIndex];
+        scene.add(group);
+
+        const symbols = reelData.reels[key];
+        for (let index = 0; index < symbols.length; index += 1) {
+          const angle = -index * STEP;
+          const holder = new THREE.Group();
+          holder.userData.symbolIndex = index;
+          holder.userData.angle = angle;
+          holder.position.set(0, -Math.sin(angle) * radius, Math.cos(angle) * radius);
+          holder.rotation.x = angle;
+
+          const backing = new THREE.Mesh(panelGeometry, backingMaterial.clone());
+          backing.position.z = -0.03;
+          backing.renderOrder = 1;
+          holder.add(backing);
+
+          const texture = await textureForSymbol(loader, textureCache, symbols[index]);
+          const material = new THREE.MeshBasicMaterial({
+            map: texture,
+            transparent: true,
+            side: THREE.DoubleSide,
+            depthTest: false,
+            depthWrite: false
+          });
+          const symbolPlane = new THREE.Mesh(panelGeometry, material);
+          const symbolScale = symbolScaleFor(symbols[index]);
+          symbolPlane.scale.set(symbolScale, symbolScale, 1);
+          symbolPlane.position.z = 0.03;
+          symbolPlane.renderOrder = 10;
+          holder.add(symbolPlane);
+
+          group.add(holder);
+          reelState[key].panels.push(holder);
+        }
+      }
+    }
+
+    function bindEvents() {
+      window.addEventListener("resize", resize);
+      startButton.addEventListener("click", startSpin);
+      Object.entries(stopButtons).forEach(([key, button]) => {
+        button.addEventListener("click", () => stopReel(key));
+      });
+    }
+
+    function startSpin() {
+      if (!ready) return;
+      const now = performance.now();
+      for (const key of REEL_KEYS) {
+        const state = reelState[key];
+        state.spinning = true;
+        state.stopping = null;
+        state.push = "-";
+        state.stop = "-";
+        state.slip = "-";
+        stopButtons[key].disabled = false;
+        stopButtons[key].setAttribute("aria-pressed", "false");
+      }
+      lastFrameAt = now;
+      renderReadout();
+    }
+
+    function stopReel(key) {
+      const state = reelState[key];
+      if (!state.spinning || state.stopping) return;
+
+      const push = Math.ceil(frontIndex(state.rotation));
+      const slip = selectedSlip();
+      const stop = mod(push + slip, REEL_LENGTH);
+      let targetRotation = stop * STEP;
+      while (targetRotation < state.rotation) targetRotation += TAU;
+
+      state.spinning = false;
+      if (slip === 0) {
+        state.rotation = targetRotation;
+        state.group.rotation.x = state.rotation;
+        state.stopping = null;
+      } else {
+        state.stopping = {
+          from: state.rotation,
+          to: targetRotation,
+          startedAt: performance.now(),
+          duration: 120 + (slip * 38)
+        };
+      }
+      state.push = push;
+      state.stop = stop;
+      state.slip = slip;
+      stopButtons[key].disabled = true;
+      stopButtons[key].setAttribute("aria-pressed", "true");
+      renderReadout();
+    }
+
+    function animate(now) {
+      const delta = Math.min(0.05, (now - lastFrameAt) / 1000);
+      lastFrameAt = now;
+
+      for (const key of REEL_KEYS) {
+        const state = reelState[key];
+        if (state.spinning) {
+          state.rotation += SPIN_SPEED * delta;
+        } else if (state.stopping) {
+          const t = Math.min(1, (now - state.stopping.startedAt) / state.stopping.duration);
+          state.rotation = lerp(state.stopping.from, state.stopping.to, easeOutCubic(t));
+          if (t >= 1) {
+            state.rotation = state.stopping.to;
+            state.stopping = null;
+          }
+        }
+        state.group.rotation.x = state.rotation;
+        updatePanelVisibility(state);
+      }
+
+      spinStatus.textContent = isMoving() ? "SPINNING" : "READY";
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+    function updatePanelVisibility(state) {
+      for (const panel of state.panels) {
+        const angle = normalizeAngle(panel.userData.angle + state.rotation);
+        panel.visible = Math.abs(angle) <= STEP * 2.15;
+      }
+    }
+
+    function renderReadout() {
+      readout.innerHTML = REEL_KEYS.map(key => {
+        const state = reelState[key];
+        const symbols = reelData?.reels?.[key] ?? [];
+        const value = state.spinning
+          ? "SPIN"
+          : `${state.stop} ${symbols[state.stop] ?? "-"} / push ${state.push} slip ${state.slip}`;
+        return `<span>${key}</span><span>${value}</span>`;
+      }).join("");
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const width = Math.max(1, Math.floor(rect.width));
+      const height = Math.max(1, Math.floor(rect.height));
+      renderer.setSize(width, height, false);
+      const aspect = width / height;
+      camera.left = -1.36 * aspect;
+      camera.right = 1.36 * aspect;
+      camera.top = 1.02;
+      camera.bottom = -1.02;
+      camera.updateProjectionMatrix();
+    }
+
+    async function textureForSymbol(loader, cache, symbolId) {
+      const assetKey = SYMBOL_ASSET_ALIASES[symbolId] ?? symbolId;
+      const asset = assetMap[assetKey] ?? assetMap[symbolId];
+      const src = asset?.src ? `./${asset.src}` : "./assets/images/symbols/symbol-blank.png";
+      if (!cache.has(src)) {
+        cache.set(src, new Promise((resolve, reject) => {
+          loader.load(src, texture => {
+            texture.colorSpace = THREE.SRGBColorSpace;
+            texture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+            resolve(texture);
+          }, undefined, reject);
+        }));
+      }
+      return cache.get(src);
+    }
+
+    function symbolScaleFor(symbolId) {
+      return isBonusSymbol(symbolId) ? 0.78 : 0.66;
+    }
+
+    function isBonusSymbol(symbolId) {
+      return symbolId === "RED7" || symbolId === "BAR" || symbolId === "AI_NIKECHAN" || symbolId === "MASTER_NIKECHAN" || symbolId === "LOGO_BAR";
+    }
+
+    function frontIndex(rotation) {
+      return mod(rotation / STEP, REEL_LENGTH);
+    }
+
+    function selectedSlip() {
+      if (pullMode.value === "random") return Math.floor(Math.random() * 5);
+      return Math.max(0, Math.min(4, Number(pullMode.value) || 0));
+    }
+
+    function isMoving() {
+      return REEL_KEYS.some(key => reelState[key].spinning || reelState[key].stopping);
+    }
+
+    async function fetchJson(path) {
+      const response = await fetch(path);
+      if (!response.ok) throw new Error(`${path}: ${response.status}`);
+      return response.json();
+    }
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function lerp(a, b, t) {
+      return a + ((b - a) * t);
+    }
+
+    function mod(value, length) {
+      return ((value % length) + length) % length;
+    }
+
+    function normalizeAngle(angle) {
+      return ((angle + Math.PI) % TAU + TAU) % TAU - Math.PI;
+    }
+  </script>
+</body>
+</html>
