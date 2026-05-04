@@ -164,6 +164,7 @@
 
     .cabinet-machine__lcd,
     .cabinet-machine__notice,
+    .cabinet-machine__reel-bezel,
     .cabinet-machine__meter,
     .cabinet-machine__control,
     .cabinet-machine__button {
@@ -200,7 +201,7 @@
     }
 
     .cabinet-machine__notice {
-      z-index: 3;
+      z-index: 4;
       left: 11.58%;
       top: 29.26%;
       width: 77.05%;
@@ -226,16 +227,26 @@
 
     .cabinet-machine__reel {
       position: absolute;
-      z-index: 3;
-      left: 11.58%;
-      top: 34.71%;
-      width: 77.05%;
-      height: 14.48%;
+      z-index: 2;
+      left: 21.47%;
+      top: 35.07%;
+      width: 57.39%;
+      height: 15.68%;
       overflow: hidden;
     }
 
+    .cabinet-machine__reel-bezel {
+      z-index: 3;
+      left: 9.4%;
+      top: 33.1%;
+      width: 81.2%;
+      height: 18.7%;
+      background: url("./assets/images/cabinet/whitebase/reel-bezel-overlay.png") center / 100% 100% no-repeat;
+      pointer-events: none;
+    }
+
     .cabinet-machine__meter {
-      z-index: 4;
+      z-index: 5;
       left: 35.81%;
       top: 49.79%;
       width: 33.05%;
@@ -265,6 +276,7 @@
     .cabinet-machine__control {
       appearance: none;
       position: absolute;
+      z-index: 5;
       display: grid;
       place-items: center;
       min-width: 0;
@@ -304,6 +316,7 @@
     .cabinet-machine__button {
       appearance: none;
       position: absolute;
+      z-index: 5;
       display: grid;
       place-items: center;
       padding: 0;
@@ -433,12 +446,29 @@
     .cabinet-machine .reel-window__frame {
       width: 100%;
       height: 100%;
-      border-width: 1px;
-      border-radius: 3px;
-      background: rgba(3, 4, 5, 0.92);
-      box-shadow:
-        inset 0 0 0 1px rgba(0, 0, 0, 0.9),
-        0 0 18px rgba(255, 66, 193, 0.22);
+      border: 0;
+      border-radius: 0;
+      background: #050607;
+      box-shadow: none;
+    }
+
+    .reel-window__canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .reel-window__frame--error {
+      display: grid;
+      place-items: center;
+      min-height: 180px;
+    }
+
+    .reel-window__error {
+      color: #f4c542;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
     }
 
     .reel-window__reels {
@@ -819,6 +849,7 @@
           <div class="cabinet-machine__lcd" id="cabinetLcd">LIVE START</div>
           <div class="cabinet-machine__notice" id="cabinetNotice">BIG BONUS</div>
           <div class="cabinet-machine__reel" id="reelWindow"></div>
+          <div class="cabinet-machine__reel-bezel" aria-hidden="true"></div>
           <div class="cabinet-machine__meter" aria-label="クレジットと払出">
             <span id="cabinetCredit">0000</span>
             <span id="cabinetPayout">000</span>
